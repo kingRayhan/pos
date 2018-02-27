@@ -1,0 +1,211 @@
+/* ============================= 
+ SIDEBAR AREA 
+=============================== */
+.sidebar {
+    width: 160px;
+    float: left;
+    display: block;
+    z-index: 16;
+    height: 100%;
+    transition: all 200ms ease-in-out;
+    background-color: $menu-bg-color;
+
+    .brand-logo {
+        padding: 20px 15px;
+        display: block;
+        background: $logo-bg;
+        display: block;
+       a {
+           font-size: 0;
+           display: block;
+           width: 100%;
+           background: url(../img/logo-white.png) no-repeat center center / 100% auto;
+       }
+    }
+}
+
+.sidebar-navigation {
+    margin: 0;
+    padding: 0;
+    background: $sidebar-bg;
+    li {
+        position: relative;
+        margin: 0;
+        display: block;
+        a {
+            padding: 10px;
+            color: $menu-item-color;
+            display: block;
+            position: relative;
+            &:hover,
+            &:focus {
+                color: $menu-item-color-active;
+                background-color: $menu-item-bg-color-hover;
+            }
+
+            i {
+                float: left;
+                font-size: 20px;
+                font-weight: 300;
+                margin-right: 10px;
+                margin-top: 3px;
+                width: 22px;
+                color: $menu-item-font-color;
+            }
+        }
+
+        &.active {
+            a{
+                color: $menu-item-color-active;
+                background-color: $menu-item-bg-color-active;
+                &:before {
+                    border-color: transparent #f1f1f1 transparent transparent;
+                    border-style: solid;
+                    border-width: 10px;
+                    content: "";
+                    position: absolute;
+                    right: 0;
+                    top: 9px;
+                }
+
+                i {
+                    color: $menu-item-color-active;
+                }
+            }
+        }
+
+        ul.sidebar-submenu {
+            &:before {
+                border-color: transparent $submenu-arrow-bg transparent transparent;
+                border-style: solid;
+                border-width: 10px;
+                content: "";
+                position: absolute;
+                top: 9px;
+                left: -20px;
+            }
+            position: absolute;
+            top: 0;
+            z-index: 15;
+            display: none;
+            width: 160px;
+            right: -100%;
+            background: $submenu-bg;
+            li {
+                display: block;
+                border: none;
+                a {
+                    display: block;
+                    font-size: 14px;
+                    padding: 6px 10px 6px 22px;
+                    &:hover,
+                    &:focus {
+                        background: $menu-item-bg-color;
+                    }
+                }
+            }
+            &.active {
+                position: relative;
+                top: auto;
+                padding: auto;
+                display: block;
+                width: 100%;
+                right: auto;
+                li {
+                    color: $menu-item-color;
+                    background-color: $menu-item-bg-color;
+                    &.active {
+                        color: $menu-item-color-active;
+                        background-color: $menu-item-bg-color-hover;
+                        a {
+                            color: $menu-item-color-active;
+                            background-color: $menu-item-bg-color-hover;   
+                        }
+                    }
+
+                    a {
+                        color: $menu-item-color;
+                        background-color: $menu-item-bg-color;
+                        &:before {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        &:hover,
+        &:focus {
+            ul.sidebar-submenu {
+                display: block;
+            }
+        }
+
+        &.collapse_menu {
+           .collapse_button {
+                padding: 10px;
+                display: block;
+                height: auto;
+                border: none;
+                width: 100%;
+                font-weight: 300;
+                cursor: pointer;
+                border: none;
+                color: $menu-item-color-active;
+                background-color: $menu-item-bg-color-active;
+           } 
+        }
+    }
+}
+
+
+
+//  For Collapsed menu
+
+body.menu_collapsed {
+    .sidebar {
+        width: 60px;
+        .sidebar-navigation li {
+            a {
+                font-size: 0;
+                text-align: center;
+                i {
+                    float: none;
+                    margin: 0;
+                }
+            }
+            ul.sidebar-submenu {
+                right: auto;
+                left: 100%;
+                li a {
+                    font-size: 14px;
+                    text-align: left;
+                }
+            }
+            .collapse_button {
+                font-size: 0;
+                i {
+                    font-size: 20px;
+                }
+            }
+            &.custom-dropdown.active {
+                ul.sidebar-submenu {
+                    position: absolute;
+                    left: 100%;
+                    width: 160px;
+                    top: 0;
+                    opacity: 0;
+                    right: auto;
+                }
+
+                &:hover {
+                    ul.sidebar-submenu {
+                        transition: all 200ms ease-in-out;
+                        opacity: 1;
+                    } 
+                }
+            }
+        }
+        
+    }
+}

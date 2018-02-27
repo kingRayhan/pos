@@ -1,0 +1,11 @@
+.main-content {
+    margin-left: 160px;
+    width: auto;
+    z-index: 13;
+}
+
+body.menu_collapsed {
+    .main-content {
+        margin-left: 60px;
+    }
+}
