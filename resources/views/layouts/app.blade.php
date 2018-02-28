@@ -6,6 +6,12 @@
     <meta name="description" content="corporate, creative, general, portfolio, photography, blog, e-commerce, shop, product, gallery, retina, responsive">
     <meta name="author" content="ElectronThemes">
 	<title>@yield('page-title')</title>
+
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+	
+	<script>
+		var AppRootPath = '{{ url('/') }}';
+	</script>
 	
 	<!-- Favicon icon -->
   	<link rel="icon" type="image/png" href="{{ asset('assets/img/favicon.ico') }}" />
@@ -42,6 +48,10 @@
 	<script src="{{ asset('assets/plugins/bootstrap/js/popper.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
 	<script src="{{ asset('assets/js/app.js') }}"></script>
+
+
+	<script src="{{ asset('js/app.js') }}"></script>
+	
 	<!-- EndInput -->
 	@if (trim($__env->yieldContent('footer')))
 	<!-- Footer Scripts only for this page start -->

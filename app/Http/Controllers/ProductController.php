@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Sell;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        return view('products.index' , compact('products'));
     }
 
     /**
@@ -24,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -35,7 +37,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Product::create([
+            'name' => $request->name,
+            'buy_price' => $request->buy_price,
+            'sell_price' => $request->sell_price,
+            'stock' => $request->stock,
+        ]);
+        
+        return redirect()->route('products.index');
+        
     }
 
     /**
@@ -57,7 +67,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('products.edit' , compact('product'));
     }
 
     /**
@@ -69,7 +79,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        Product::find($product->id)
+            ->update([
+                'name' => $request->name,
+                'buy_price' => $request->buy_price,
+                'sell_price' => $request->sell_price,
+                'stock' => $request->stock,
+            ]);
+            return redirect()->route('products.index');
     }
 
     /**
@@ -78,8 +95,28 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($product_id)
     {
-        //
+        Product::destroy($product_id);
+        return redirect()->route('products.index');
+    }
+
+    public function getProductData($product_id)
+    {
+        return Product::find($product_id);
+    }
+
+    public function sellProduct(Request $request)
+    {
+        Sell::create([
+            'product_id' => $request->product_id,
+            'sell_price' => $request->sell_price,
+            'quantity' => $request->quantity
+        ]);
+
+        $stock = Product::find($request->product_id);
+        $stock->update([
+            'stock' => $stock->stock - $request->quantity
+        ]);
     }
 }
