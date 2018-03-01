@@ -1411,6 +1411,7 @@ window.Vue = __webpack_require__(36);
  */
 
 Vue.component('search-product', __webpack_require__(39));
+Vue.component('single-cart', __webpack_require__(45));
 
 var app = new Vue({
   el: '#app'
@@ -30661,7 +30662,7 @@ exports = module.exports = __webpack_require__(9)(false);
 
 
 // module
-exports.push([module.i, "\n.product-id[data-v-95ae803e]{\n    width: 100%;\n    padding: 15px;\n}\n", ""]);
+exports.push([module.i, "\n.single-cart[data-v-95ae803e]{\n        position: relative;\n}\n.delete-product-from-cart[data-v-95ae803e]{\n        position: absolute;\n        right: -50px;\n        z-index: 999;\n        top: 5px;\n        cursor: pointer;\n}\n.success-sign[data-v-95ae803e] {\n    background: #DFF0D8;\n    width: 150px;\n    font-size: 60px;\n    color: #3C763D;\n    margin: auto;\n    padding: 44px 0;\n    border-radius: 50%;\n    margin-top: 35px;\n}\n.error-happened .success-sign[data-v-95ae803e] {\n    background: #F8D7DA;\n    width: 150px;\n    font-size: 60px;\n    color: #721c24;\n    margin: auto;\n    padding: 44px 0;\n    border-radius: 50%;\n    margin-top: 35px;\n}\n", ""]);
 
 // exports
 
@@ -30749,15 +30750,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             productKey: '',
-            fetchProduct: '',
-            quantity: 1,
-            discount: 0,
-            stock: 0
+            bags: [],
+            confirmPurchase: false,
+            errorHappened: false
         };
     },
 
@@ -30766,26 +30769,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.getProductDetails();
         }
     },
+    computed: {
+        totalBills: function totalBills(item) {
+            var tb = 0;
+            this.bags.forEach(function (p) {
+                tb += parseInt(p.sell_price) * parseInt(p.quantity);
+            });
+
+            return tb;
+        }
+    },
     methods: {
         getProductDetails: _.debounce(function () {
-            var _this = this;
+            var _this2 = this;
 
             if (this.productKey) {
                 axios.post(AppRootPath + '/products/getProductData/' + this.productKey).then(function (p) {
-                    _this.fetchProduct = p.data;
-                    _this.stock = p.data.stock;
+                    var _this = _this2;
+                    function addProduct(product) {
+                        var newProduct = {
+                            product_id: product.id,
+                            name: product.name,
+                            sell_price: product.sell_price,
+                            quantity: 1
+                        };
+                        var found = 0;
+                        _this.bags.forEach(function (el) {
+                            if (el.product_id == newProduct.product_id) {
+                                el.quantity++;
+                                found = 1;
+                            }
+                        });
+                        if (!found) {
+                            _this.bags.push(newProduct);
+                        }
+                    }
+                    addProduct(p.data);
+                    document.querySelector('#product_key').value = "";
                 });
-            } else {
-                this.fetchProduct = 0;
             }
         }, 500),
-        sellProduct: function sellProduct() {
-            axios.post(AppRootPath + '/products/sellProduct', {
-                'product_id': this.productKey,
-                'sell_price': document.querySelector('#net_price').textContent / document.querySelector('#quantity').value,
-                'quantity': document.querySelector('#quantity').value
-            }).then(function (res) {
-                console.log(res);
+        removeProduct: function removeProduct(index) {
+            this.bags.splice(index, 1);
+        },
+        sellAgain: function sellAgain() {
+            this.confirmPurchase = false;
+            this.bags = [];
+            this.errorHappened = false;
+        },
+        confirmPurchases: function confirmPurchases() {
+            var _this3 = this;
+
+            var _this = this;
+            axios.post('/sells/sellProduct/', this.bags).then(function (res) {
+                _this3.confirmPurchase = true;
+            }).catch(function (error) {
+                _this.errorHappened = true;
+                console.error(error);
             });
         }
     }
@@ -30801,176 +30841,122 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-md-8 ml-auto mr-auto" }, [
-      _c("h1", [_vm._v("Insert Product Key")]),
+      !_vm.confirmPurchase
+        ? _c("h1", [_vm._v("Insert Product Key")])
+        : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.productKey,
-              expression: "productKey"
-            }
-          ],
-          staticClass: "form-control product-id",
-          attrs: {
-            type: "text",
-            id: "product_id",
-            placeholder: "Put Product Key"
-          },
-          domProps: { value: _vm.productKey },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      !_vm.confirmPurchase
+        ? _c("div", { staticClass: "form-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.productKey,
+                  expression: "productKey"
+                }
+              ],
+              staticClass: "form-control product-id",
+              attrs: {
+                type: "text",
+                placeholder: "Put Product Key",
+                id: "product_key"
+              },
+              domProps: { value: _vm.productKey },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.productKey = $event.target.value
+                }
               }
-              _vm.productKey = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _vm.stock != 0
-        ? _c("div", { staticClass: "product-details" }, [
-            _c("table", { staticClass: "table" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(1),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm.fetchProduct.name))])
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(2),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.fetchProduct.sell_price,
-                        expression: "fetchProduct.sell_price"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", id: "sell_price" },
-                    domProps: { value: _vm.fetchProduct.sell_price },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.fetchProduct,
-                          "sell_price",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(3),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.quantity,
-                        expression: "quantity"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", id: "quantity" },
-                    domProps: { value: _vm.quantity },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.quantity = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(4),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.discount,
-                        expression: "discount"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", id: "quantity" },
-                    domProps: { value: _vm.discount },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.discount = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(5),
-                _vm._v(" "),
-                _c("td", [
-                  _vm._v(
-                    _vm._s(
-                      _vm.fetchProduct.sell_price *
-                        _vm.quantity *
-                        _vm.discount /
-                        100
-                    )
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(6),
-                _vm._v(" "),
-                _c("td", [
-                  _c("span", { attrs: { id: "net_price" } }, [
-                    _vm._v(
-                      _vm._s(
-                        _vm.fetchProduct.sell_price * _vm.quantity -
-                          _vm.fetchProduct.sell_price *
-                            _vm.quantity *
-                            _vm.discount /
-                            100
-                      )
-                    )
-                  ])
-                ])
-              ])
-            ])
+            })
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", on: { click: _vm.sellProduct } },
-        [_vm._v("Sell")]
-      )
+      !_vm.confirmPurchase
+        ? _c("div", [
+            _vm.bags.length
+              ? _c("div", [
+                  _c("h3", [_vm._v("Total Bills: " + _vm._s(_vm.totalBills))]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "pt-1 pb-3" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        on: { click: _vm.confirmPurchases }
+                      },
+                      [_vm._v("Confirm Purchase")]
+                    )
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.bags.length
+              ? _c(
+                  "table",
+                  { staticClass: "table" },
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _vm._l(_vm.bags, function(product, index) {
+                      return _c("single-cart", {
+                        key: product.id,
+                        attrs: { product: product }
+                      })
+                    })
+                  ],
+                  2
+                )
+              : _vm._e()
+          ])
+        : _c("div", [
+            _c("div", { staticClass: "card text-center done-purchase" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "h1",
+                { staticClass: "text-uppercase text-success pt-2 pb-2" },
+                [_vm._v("Purchase confired")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  on: { click: _vm.sellAgain }
+                },
+                [_vm._v("Sell Again")]
+              )
+            ])
+          ]),
+      _vm._v(" "),
+      _vm.errorHappened
+        ? _c(
+            "div",
+            { staticClass: "card text-center done-purchase error-happened" },
+            [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "h1",
+                { staticClass: "text-uppercase text-danger pt-2 pb-2" },
+                [_vm._v("Something Wrong!!")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  on: { click: _vm.sellAgain }
+                },
+                [_vm._v("Try Again")]
+              )
+            ]
+          )
+        : _vm._e()
     ])
   ])
 }
@@ -30979,43 +30965,34 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [_c("th"), _vm._v(" "), _c("th")])
+    return _c("tr", [
+      _c("th", [_vm._v("Product Name")]),
+      _vm._v(" "),
+      _c("th", { attrs: { width: "15%" } }, [_vm._v("Unit Price")]),
+      _vm._v(" "),
+      _c("th", { attrs: { width: "15%" } }, [_vm._v("Quantity")]),
+      _vm._v(" "),
+      _c("th", { attrs: { width: "15%" } }, [_vm._v("Net Price")])
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [_c("b", [_vm._v("Product:")])])
+    return _c("div", { staticClass: "success-sign" }, [
+      _c("i", { staticClass: "fa fa-check" })
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [_c("b", [_vm._v("Unit Price")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("b", [_vm._v("Quantity")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("b", [_vm._v("Discount (%)")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("b", [_vm._v("Discount Money")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("b", [_vm._v("Net Bill")])])
+    return _c("div", { staticClass: "success-sign" }, [
+      _c("i", {
+        staticClass: "fa fa-exclamation",
+        attrs: { "aria-hidden": "true" }
+      })
+    ])
   }
 ]
 render._withStripped = true
@@ -31028,11 +31005,208 @@ if (false) {
 }
 
 /***/ }),
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(46)
+}
+var normalizeComponent = __webpack_require__(11)
+/* script */
+var __vue_script__ = __webpack_require__(48)
+/* template */
+var __vue_template__ = __webpack_require__(49)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-26437d04"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\single-cart.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-26437d04", Component.options)
+  } else {
+    hotAPI.reload("data-v-26437d04", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(47);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(10)("4efb957c", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-26437d04\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./single-cart.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-26437d04\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./single-cart.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(9)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.single-cart[data-v-26437d04] {\n    -webkit-box-shadow: 0 0 3px rgba(0,0,0,.3);\n            box-shadow: 0 0 3px rgba(0,0,0,.3);\n    position: relative;\n}\n.single-cart .h[data-v-26437d04] {\n    display: none;\n}\n.delete-product-from-cart[data-v-26437d04]{\n    position: absolute;\n    top: 0;\n    right: -50px;\n    cursor: pointer;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 48 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['product'],
+    data: function data() {
+        return {
+            fetchProduct: this.product
+        };
+    }
+});
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("tr", [
+    _c("td", [_vm._v(_vm._s(_vm.fetchProduct.name))]),
+    _vm._v(" "),
+    _c("td", [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.fetchProduct.sell_price,
+            expression: "fetchProduct.sell_price"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", id: "sell_price" },
+        domProps: { value: _vm.fetchProduct.sell_price },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.fetchProduct, "sell_price", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("td", [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.fetchProduct.quantity,
+            expression: "fetchProduct.quantity"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", id: "quantity" },
+        domProps: { value: _vm.fetchProduct.quantity },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.fetchProduct, "quantity", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("td", [
+      _c("span", { attrs: { id: "net_price" } }, [
+        _vm._v(
+          "\n            " +
+            _vm._s(_vm.fetchProduct.sell_price * _vm.fetchProduct.quantity) +
+            "\n        "
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-26437d04", module.exports)
+  }
+}
+
+/***/ }),
 /* 50 */
 /***/ (function(module, exports) {
 
