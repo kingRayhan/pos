@@ -58,14 +58,29 @@ export default {
                 if( this.productKey ){
                     axios
                     .post(`${AppRootPath}/products/getProductData/${this.productKey}`)
-                        .then((p) => {
-                            this.bags.push({
-                                product_id: p.data.id,
-                                name: p.data.name,
-                                sell_price: p.data.sell_price,
+                    .then((p) => {
+                        var _this = this;
+                        function addProduct(product){
+                            var newProduct = {
+                                product_id: product.id,
+                                name: product.name,
+                                sell_price: product.sell_price,
                                 quantity: 1
-                            });
-                        });
+                            };
+                            var found = 0;
+                            _this.bags.forEach( el => {
+                               if( el.product_id == newProduct.product_id ){
+                                   el.quantity++; 
+                                   found = 1;
+                               }
+                            } );
+                            if(!found)
+                            {
+                                _this.bags.push(newProduct);
+                            }
+                        }
+                        addProduct(p.data);
+                    });
                 }
                
             },
