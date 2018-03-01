@@ -1,29 +1,46 @@
 <template>
     <div class="row">
         <div class="col-md-8 ml-auto mr-auto">
-            <h1>Insert Product Key</h1>
-            <div class="form-group">
+            <h1 v-if="!confirmPurchase">Insert Product Key</h1>
+            <div class="form-group" v-if="!confirmPurchase">
                 <input type="text" placeholder="Put Product Key" class="form-control product-id" id="product_key" v-model="productKey">
             </div>
 
-            <div>
-                <h3>Total Bills: {{ totalBills }}</h3>
-                <div class="pt-1 pb-3">
-                    <button class="btn btn-primary" @click="confirmPurchases">Confirm Purchase</button>
+            <div v-if="!confirmPurchase">
+                <div v-if="bags.length">
+                    <h3>Total Bills: {{ totalBills }}</h3>
+                    <div class="pt-1 pb-3">
+                        <button class="btn btn-primary" @click="confirmPurchases">Confirm Purchase</button>
+                    </div>
+                </div>
+                <table class="table" v-if="bags.length">
+                    <tr>
+                        <th>Product Name</th>
+                        <th width="15%">Unit Price</th>
+                        <th width="15%">Quantity</th>
+                        <th width="15%">Net Price</th>
+                    </tr>
+
+                    <single-cart v-for="(product,index) in bags" :key="product.id" :product="product"></single-cart>             
+                    
+                </table> 
+            </div>
+            <div v-else>
+                <div class="card text-center done-purchase">
+                    <div class="success-sign">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <h1 class="text-uppercase text-success pt-2 pb-2">Purchase confired</h1>
+                    <button class="btn btn-primary" @click="sellAgain">Sell Again</button>
                 </div>
             </div>
-            <table class="table">
-                <tr>
-                    <th>Product Name</th>
-                    <th width="15%">Unit Price</th>
-                    <th width="15%">Quantity</th>
-                    <th width="15%">Net Price</th>
-                </tr>
-
-                <single-cart v-for="(product,index) in bags" :key="product.id" :product="product"></single-cart>             
-                
-            </table> 
-
+            <div class="card text-center done-purchase error-happened" v-if="errorHappened">
+                <div class="success-sign">
+                    <i class="fa fa-exclamation" aria-hidden="true"></i>
+                </div>
+                <h1 class="text-uppercase text-danger pt-2 pb-2">Something Wrong!!</h1>
+                <button class="btn btn-primary" @click="sellAgain">Try Again</button>
+            </div>
         </div>
     </div>
 </template>
@@ -33,7 +50,9 @@ export default {
     data(){
         return{
             productKey: '',
-            bags: []
+            bags: [],
+            confirmPurchase: false,
+            errorHappened: false
         }
     },
     watch: {
@@ -90,13 +109,24 @@ export default {
         removeProduct(index){
             this.bags.splice(index , 1);
         },
+        sellAgain()
+        {
+            this.confirmPurchase = false;
+            this.bags = []; 
+            this.errorHappened = false;
+        },
         confirmPurchases()
         {
+            var _this = this;
             axios
             .post(`/sells/sellProduct/`, this.bags )
             .then( res => {
-                console.log(res.data);
-            } );
+                this.confirmPurchase = true;
+            } )
+            .catch(function (error) {
+                _this.errorHappened = true;
+                console.error(error);
+            });
         }
     }
 }
@@ -114,4 +144,24 @@ export default {
         top: 5px;
         cursor: pointer;
     }
+.success-sign {
+    background: #DFF0D8;
+    width: 150px;
+    font-size: 60px;
+    color: #3C763D;
+    margin: auto;
+    padding: 44px 0;
+    border-radius: 50%;
+    margin-top: 35px;
+}
+.error-happened .success-sign {
+    background: #F8D7DA;
+    width: 150px;
+    font-size: 60px;
+    color: #721c24;
+    margin: auto;
+    padding: 44px 0;
+    border-radius: 50%;
+    margin-top: 35px;
+}
 </style>

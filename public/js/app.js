@@ -30662,7 +30662,7 @@ exports = module.exports = __webpack_require__(9)(false);
 
 
 // module
-exports.push([module.i, "\n.single-cart[data-v-95ae803e]{\n    position: relative;\n}\n.delete-product-from-cart[data-v-95ae803e]{\n    position: absolute;\n    right: -50px;\n    z-index: 999;\n    top: 5px;\n    cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n.single-cart[data-v-95ae803e]{\n        position: relative;\n}\n.delete-product-from-cart[data-v-95ae803e]{\n        position: absolute;\n        right: -50px;\n        z-index: 999;\n        top: 5px;\n        cursor: pointer;\n}\n.success-sign[data-v-95ae803e] {\n    background: #DFF0D8;\n    width: 150px;\n    font-size: 60px;\n    color: #3C763D;\n    margin: auto;\n    padding: 44px 0;\n    border-radius: 50%;\n    margin-top: 35px;\n}\n.error-happened .success-sign[data-v-95ae803e] {\n    background: #F8D7DA;\n    width: 150px;\n    font-size: 60px;\n    color: #721c24;\n    margin: auto;\n    padding: 44px 0;\n    border-radius: 50%;\n    margin-top: 35px;\n}\n", ""]);
 
 // exports
 
@@ -30736,12 +30736,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             productKey: '',
-            bags: []
+            bags: [],
+            confirmPurchase: false,
+            errorHappened: false
         };
     },
 
@@ -30793,9 +30812,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         removeProduct: function removeProduct(index) {
             this.bags.splice(index, 1);
         },
+        sellAgain: function sellAgain() {
+            this.confirmPurchase = false;
+            this.bags = [];
+            this.errorHappened = false;
+        },
         confirmPurchases: function confirmPurchases() {
+            var _this3 = this;
+
+            var _this = this;
             axios.post('/sells/sellProduct/', this.bags).then(function (res) {
-                console.log(res.data);
+                _this3.confirmPurchase = true;
+            }).catch(function (error) {
+                _this.errorHappened = true;
+                console.error(error);
             });
         }
     }
@@ -30811,66 +30841,122 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-md-8 ml-auto mr-auto" }, [
-      _c("h1", [_vm._v("Insert Product Key")]),
+      !_vm.confirmPurchase
+        ? _c("h1", [_vm._v("Insert Product Key")])
+        : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.productKey,
-              expression: "productKey"
-            }
-          ],
-          staticClass: "form-control product-id",
-          attrs: {
-            type: "text",
-            placeholder: "Put Product Key",
-            id: "product_key"
-          },
-          domProps: { value: _vm.productKey },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      !_vm.confirmPurchase
+        ? _c("div", { staticClass: "form-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.productKey,
+                  expression: "productKey"
+                }
+              ],
+              staticClass: "form-control product-id",
+              attrs: {
+                type: "text",
+                placeholder: "Put Product Key",
+                id: "product_key"
+              },
+              domProps: { value: _vm.productKey },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.productKey = $event.target.value
+                }
               }
-              _vm.productKey = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", [
-        _c("h3", [_vm._v("Total Bills: " + _vm._s(_vm.totalBills))]),
-        _vm._v(" "),
-        _c("div", { staticClass: "pt-1 pb-3" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary",
-              on: { click: _vm.confirmPurchases }
-            },
-            [_vm._v("Confirm Purchase")]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "table",
-        { staticClass: "table" },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          _vm._l(_vm.bags, function(product, index) {
-            return _c("single-cart", {
-              key: product.id,
-              attrs: { product: product }
             })
-          })
-        ],
-        2
-      )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.confirmPurchase
+        ? _c("div", [
+            _vm.bags.length
+              ? _c("div", [
+                  _c("h3", [_vm._v("Total Bills: " + _vm._s(_vm.totalBills))]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "pt-1 pb-3" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        on: { click: _vm.confirmPurchases }
+                      },
+                      [_vm._v("Confirm Purchase")]
+                    )
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.bags.length
+              ? _c(
+                  "table",
+                  { staticClass: "table" },
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _vm._l(_vm.bags, function(product, index) {
+                      return _c("single-cart", {
+                        key: product.id,
+                        attrs: { product: product }
+                      })
+                    })
+                  ],
+                  2
+                )
+              : _vm._e()
+          ])
+        : _c("div", [
+            _c("div", { staticClass: "card text-center done-purchase" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "h1",
+                { staticClass: "text-uppercase text-success pt-2 pb-2" },
+                [_vm._v("Purchase confired")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  on: { click: _vm.sellAgain }
+                },
+                [_vm._v("Sell Again")]
+              )
+            ])
+          ]),
+      _vm._v(" "),
+      _vm.errorHappened
+        ? _c(
+            "div",
+            { staticClass: "card text-center done-purchase error-happened" },
+            [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "h1",
+                { staticClass: "text-uppercase text-danger pt-2 pb-2" },
+                [_vm._v("Something Wrong!!")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  on: { click: _vm.sellAgain }
+                },
+                [_vm._v("Try Again")]
+              )
+            ]
+          )
+        : _vm._e()
     ])
   ])
 }
@@ -30887,6 +30973,25 @@ var staticRenderFns = [
       _c("th", { attrs: { width: "15%" } }, [_vm._v("Quantity")]),
       _vm._v(" "),
       _c("th", { attrs: { width: "15%" } }, [_vm._v("Net Price")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "success-sign" }, [
+      _c("i", { staticClass: "fa fa-check" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "success-sign" }, [
+      _c("i", {
+        staticClass: "fa fa-exclamation",
+        attrs: { "aria-hidden": "true" }
+      })
     ])
   }
 ]
