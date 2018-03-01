@@ -105,18 +105,4 @@ class ProductController extends Controller
     {
         return Product::find($product_id);
     }
-
-    public function sellProduct(Request $request)
-    {
-        Sell::create([
-            'product_id' => $request->product_id,
-            'sell_price' => $request->sell_price,
-            'quantity' => $request->quantity
-        ]);
-
-        $stock = Product::find($request->product_id);
-        $stock->update([
-            'stock' => $stock->stock - $request->quantity
-        ]);
-    }
 }

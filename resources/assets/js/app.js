@@ -16,6 +16,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('search-product', require('./components/search-product.vue'));
+Vue.component('single-cart', require('./components/single-cart.vue'));
 
 const app = new Vue({
     el: '#app'

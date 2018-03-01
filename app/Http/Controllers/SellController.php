@@ -83,4 +83,31 @@ class SellController extends Controller
     {
         //
     }
+
+
+    public function sellProduct(Request $request)
+    {
+     // foreach( $request as $product ){
+        //     Sell::create([
+        //         'product_id' => $product->product_id,
+        //         'sell_price' => $product->sell_price,
+        //         'quantity' => $product->quantity
+        //     ]);
+        // }
+        // foreach( $request as $product ){
+        //     $stock = Product::find($product->product_id);
+        //     $stock->update([
+        //         'stock' => $stock->stock - $product->quantity
+        //     ]);
+        //     Sell::create([
+        //         'product_id' => $product->product_id,
+        //         'sell_price' => $product->sell_price,
+        //         'quantity' => $product->quantity
+        //     ]);
+        // }
+        foreach( $request as $value )
+        {
+            var_dump($value);
+        }
+    }
 }
