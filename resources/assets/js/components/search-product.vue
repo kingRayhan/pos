@@ -80,6 +80,7 @@ export default {
                             }
                         }
                         addProduct(p.data);
+                        document.querySelector('#product_key').value = "";
                     });
                 }
                
@@ -91,10 +92,11 @@ export default {
         },
         confirmPurchases()
         {
-            axios.post(`/sells/sellProduct/`, this.bags)
-                 .then( res => {
-                     console.log(res.data);
-                 } );
+            axios
+            .post(`/sells/sellProduct/`, this.bags )
+            .then( res => {
+                console.log(res.data);
+            } );
         }
     }
 }

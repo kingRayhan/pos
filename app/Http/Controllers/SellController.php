@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Sell;
+use App\Product;
 use Illuminate\Http\Request;
 
 class SellController extends Controller
@@ -87,27 +88,19 @@ class SellController extends Controller
 
     public function sellProduct(Request $request)
     {
-     // foreach( $request as $product ){
-        //     Sell::create([
-        //         'product_id' => $product->product_id,
-        //         'sell_price' => $product->sell_price,
-        //         'quantity' => $product->quantity
-        //     ]);
-        // }
-        // foreach( $request as $product ){
-        //     $stock = Product::find($product->product_id);
-        //     $stock->update([
-        //         'stock' => $stock->stock - $product->quantity
-        //     ]);
-        //     Sell::create([
-        //         'product_id' => $product->product_id,
-        //         'sell_price' => $product->sell_price,
-        //         'quantity' => $product->quantity
-        //     ]);
-        // }
-        foreach( $request as $value )
+        $products = json_decode($request->getContent() , true);
+
+        foreach( $products as $product )
         {
-            var_dump($value);
+            Sell::create([
+                'product_id' => $product['product_id'],
+                'sell_price' => $product['sell_price'],
+                'quantity' => $product['quantity']
+            ]);
+            $stock = Product::find($product['product_id']);
+            $stock->update([
+                'stock' => $stock->stock - $product['quantity']
+            ]);
         }
     }
 }

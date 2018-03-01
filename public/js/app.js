@@ -30786,6 +30786,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         }
                     }
                     addProduct(p.data);
+                    document.querySelector('#product_key').value = "";
                 });
             }
         }, 500),

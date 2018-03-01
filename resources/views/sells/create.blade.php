@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('page-title' , 'All Products')
+@section('page-title' , 'Sell Product')
 
 @section('header')
 
