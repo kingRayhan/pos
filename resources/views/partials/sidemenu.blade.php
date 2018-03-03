@@ -26,6 +26,15 @@
 				</ul>
 
 			</li>
+			<li class="custom-dropdown">
+				<a href="{{ route('customers.index') }}"><i aria-hidden="true" class="fa fa-user"></i> Sells</a>
+			
+				<ul class="sidebar-submenu">
+					<li><a href="{{ route('customers.index') }}">All Customers</a></li>
+					<li><a href="{{ route('customers.create') }}">Add New Customer</a></li>
+				</ul>
+
+			</li>
 			<li class="collapse_menu">
 				<button type="button" class="collapse_button"><i aria-hidden="true" class="fa fa-toggle-off"></i> Collapse menu</button>
 			</li>

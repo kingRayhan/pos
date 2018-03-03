@@ -5,6 +5,7 @@
 @section('header')
 
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatable/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatable/dataTables.bootstrap4.min.css') }}">
     <style>
         .barcode-sticker{
             background: #FFF;
@@ -33,22 +34,23 @@
     <script>
         $(document).ready(function() {
             $('#datatable').DataTable({
-                "order": ['0' , 'desc']
+                "order": ['0' , 'desc'],
+                pageLength: 49
             });
         } );
     </script>
 @stop
 
 @section('page-content')
-    <div class="container pt-5">
+    <div class="container-fluid pt-2">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="text-uppercase pb-2">Sell Reports</h1>
-                <table id="datatable" class="table table-hover">
+                <h1 class="text-uppercase">Sell Reports</h1>
+                {{--  <table id="datatable" class="table table-hover">
                     <thead>
                         <tr>
                             <th width="10%">Sell ID#</th>
-                            <th width="10%">Time</th>
+                            <th width="20%">Time</th>
                             <th width="20%">Product Name</th>
                             <th width="15%">Buy Price</th>
                             <th>Sell Price</th>
@@ -61,7 +63,11 @@
                         @foreach($sells as $sell)
                             <tr>
                                 <td>{{ $sell->id }}</td>
-                                <td>{{ $sell->create }}</td>
+                                <td>
+                                    {{ $sell->created_at->format('d/m/y') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    {{ $sell->created_at->format('g:i:s a') }}
+                                
+                                </td>
                                 <td>{{ $sell->product->name }}</td>
                                 <td>{{ $sell->product->buy_price }}</td>
                                 <td>{{ $sell->sell_price }}</td>
@@ -71,7 +77,8 @@
                             </tr>
                         @endforeach
                     </tbody>
-                </table>
+                </table>  --}}
+                <sell-report></sell-report>
             </div>
         </div>
     </div>

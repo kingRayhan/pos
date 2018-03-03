@@ -1,5 +1,5 @@
 <template>
-    <tr>
+    <tr class="single-product-row">
         <td>{{ fetchProduct.name }}</td>
         <td><input type="text" id="sell_price" class="form-control" v-model="fetchProduct.sell_price"></td>
         <td><input type="text" id="quantity" class="form-control" v-model="fetchProduct.quantity"></td>
@@ -8,6 +8,7 @@
                 {{ fetchProduct.sell_price * fetchProduct.quantity  }}
             </span>
         </td>
+        <button @click="$emit('remove')"><i class="fa fa-times"></i></button>
     </tr>
 
 </template>
@@ -25,19 +26,13 @@ export default {
 </script>
 
 
-<style scoped>
-    .single-cart {
-        box-shadow: 0 0 3px rgba(0,0,0,.3);
-        position: relative;
+<style scoped lang="scss">
+    button{
+        background: red;
+        border: none;
+        color: #FFF;
+        &:hover{
+            cursor: pointer;
+        }
     }
-    .single-cart .h {
-        display: none;
-    }
-    .delete-product-from-cart{
-        position: absolute;
-        top: 0;
-        right: -50px;
-        cursor: pointer;
-    }
-
 </style>

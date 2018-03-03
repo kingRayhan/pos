@@ -32,12 +32,12 @@
 
   </head>
 <body>
-<div class="wrapper">
-
-    @include('partials.sidemenu')
+<div class="wrapper" id="app">
+	@include('partials.sidemenu')
 
 	<!-- START MAIN CONTENT -->
 	<main class="main-content">
+		@include('errors')
 		@yield('page-content')
 	</main>
 	<!-- MAIN CONTENT END -->

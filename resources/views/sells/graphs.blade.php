@@ -30,7 +30,6 @@
 @section('footer')
     <script src="{{ asset('assets/plugins/datatable/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatable/dataTables.bootstrap4.min.js') }}"></script>
-    
     <script>
         $(document).ready(function() {
             $('#datatable').DataTable({
@@ -42,6 +41,6 @@
 
 @section('page-content')
     <div class="container pt-5">
-        <search-product></search-product>
+        <sell-graphs></sell-graphs>
     </div>
 @stop

@@ -21,7 +21,7 @@
                         <th width="15%">Net Price</th>
                     </tr>
 
-                    <single-cart v-for="(product,index) in bags" :key="product.id" :product="product"></single-cart>             
+                    <single-cart v-for="(product,index) in bags" :key="product.id" :product="product" @remove="removeItem(index)"></single-cart>             
                     
                 </table> 
             </div>
@@ -33,6 +33,7 @@
                     <h1 class="text-uppercase text-success pt-2 pb-2">Purchase confired</h1>
                     <button class="btn btn-primary" @click="sellAgain">Sell Again</button>
                 </div>
+                <print-slip :items="bags"></print-slip>
             </div>
             <div class="card text-center done-purchase error-happened" v-if="errorHappened">
                 <div class="success-sign">
@@ -42,6 +43,8 @@
                 <button class="btn btn-primary" @click="sellAgain">Try Again</button>
             </div>
         </div>
+         
+
     </div>
 </template>
 
@@ -99,15 +102,16 @@ export default {
                             }
                         }
                         addProduct(p.data);
-                        document.querySelector('#product_key').value = "";
+                        this.productKey = '';
                     });
                 }
                
             },
             500
         ),
-        removeProduct(index){
+        removeItem(index){
             this.bags.splice(index , 1);
+            // console.log(index);
         },
         sellAgain()
         {

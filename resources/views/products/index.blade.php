@@ -58,12 +58,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($products as $product)
+                        @foreach($products as $i => $product)
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->name }}</td>
                             <td>
-                                <div class="barcode-sticker">
+                                <div class="barcode-sticker" id="barcode-sticker-{{ $i }}">
                                 <img 
                                     src="data:image/png;base64,{{ DNS1D::getBarcodePNG(str_pad($product->id, 8, '0', STR_PAD_LEFT), "C128B") }}"
                                     alt="product-id-{{ str_pad($product->id, 8, '0', STR_PAD_LEFT) }}"
@@ -71,6 +71,11 @@
                                     >
                                     <span class="product-id">{{ str_pad($product->id, 8, '0', STR_PAD_LEFT) }}</span>
                                 </div>
+                                <button class="btn btn-primary btn-sm" onclick="printJS({
+                                    printable : 'barcode-sticker-{{ $i }}',
+                                    type: 'html',
+                                    documentTitle: 'Product Barcode Sticker'
+                                })"><i class="fa fa-print"></i></button>
                             </td>
                             <td>{{ $product->buy_price }}</td>
                             <td>{{ $product->sell_price }}</td>
