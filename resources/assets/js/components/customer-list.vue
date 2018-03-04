@@ -9,9 +9,9 @@
               <td>Action</td>
           </tr>
           <tr v-for="customer in filteredCustomer">
-              <td>{{ customer.name }}</td>
+              <td><a :href="'/customers/' + customer.customer_id" >{{ customer.name }}</a></td>
               <td>{{ customer.number }}</td>
-              <td>{{ customer.shopping_spend ? customer.shopping_spend : 'No Shopping' }}</td>
+              <td :class="{ 'text-muted' : !customer.shopping_spend }">{{ customer.shopping_spend ? customer.shopping_spend : 'No Shopping' }}</td>
               <td>
                   <a :href="`/customers/${customer.customer_id}/shoppinghistory`" class="btn btn-info btn-sm" v-if="customer.shopping_spend">
                       <i class="fa fa-list"></i></a>
@@ -50,4 +50,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+.text-muted {
+    color: #caccce !important;
+}
+</style>
 

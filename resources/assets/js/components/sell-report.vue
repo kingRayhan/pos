@@ -8,6 +8,7 @@
       <b>From:&nbsp;</b><input type="date" v-model="fromDate" forma placeholder="from Date" class="date-filter">
       &nbsp;
       <b>To:&nbsp;</b><input type="date" v-model="toDate" placeholder="from Date" class="date-filter">
+      <button @click="visibility = 'dateRange'">Filter</button>
       <div class="pt-3">
           <table>
               <tr>
@@ -60,7 +61,6 @@ export default {
             .get(`${AppRootPath}/apirequest/sells/index`)
             .then( res => {
                 this.sellReports = res.data.data;
-                console.log(res.data.data);
             } )  
     },
     data()
@@ -94,6 +94,10 @@ export default {
                     var today = dd+'/'+mm+'/'+yyyy;
                     return sell.date.match(today);
                 } );
+            }else if(this.visibility == 'dateRange'){
+                data = this.sellReports.filter( sell => {
+                    return (new Date(sell.date).getTime() ) >= this.fromTimeStamp && (new Date(sell.date).getTime() ) <= this.toTimeStamp;
+                } );
             }
       
             // else if( this.fromDate != '' && this.toDate != '' )
@@ -120,6 +124,20 @@ export default {
                 total += el.total_sell_price;
             });
             return total;
+        },
+        fromTimeStamp( date )
+        {
+            var newDate = this.fromDate.split('-');
+            var fromDate = `${newDate[2]}/${newDate[1]}/${newDate[0]}`;
+
+            return new Date(fromDate).getTime();
+        },
+        toTimeStamp( date )
+        {
+            var newDate = this.toDate.split('-');
+            var fromDate = `${newDate[2]}/${newDate[1]}/${newDate[0]}`;
+
+            return new Date(fromDate).getTime();
         }
     }
 }

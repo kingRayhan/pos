@@ -12,7 +12,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="{{ route('customers.show' , $customer->id) }}"><b>[Customer Details]</b></a>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button onclick="printJS('shoppingHistory' , 'html')"><i class="fa fa-print"></i> Print</button>
+                    <button onclick="printJS('shoppingHistory' , 'html')" class="btn btn-link"><b>[ <i class="fa fa-print"></i> Print ]</b></button>
                 </div>
                 <br>
                 <table class="table">
