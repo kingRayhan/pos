@@ -20,6 +20,7 @@ class CustomerResource extends JsonResource
             'email' => $this->email,
             'number' => $this->number,
             'address' => $this->address,
+            'shopping_spend' => $this->totalSpend(),
             'note' => $this->note
         ];
     }

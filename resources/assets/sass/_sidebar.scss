@@ -9,7 +9,7 @@
     height: 100%;
     transition: all 200ms ease-in-out;
     background-color: $menu-bg-color;
-
+  
     .brand-logo {
         padding: 20px 15px;
         display: block;
@@ -19,12 +19,12 @@
            font-size: 0;
            display: block;
            width: 100%;
-           background: url(../img/logo-white.png) no-repeat center center / 100% auto;
+           background: url(../images/logo-white.png) no-repeat center center / 100% auto;
        }
     }
-}
-
-.sidebar-navigation {
+  }
+  
+  .sidebar-navigation {
     margin: 0;
     padding: 0;
     background: $sidebar-bg;
@@ -42,7 +42,7 @@
                 color: $menu-item-color-active;
                 background-color: $menu-item-bg-color-hover;
             }
-
+  
             i {
                 float: left;
                 font-size: 20px;
@@ -53,7 +53,7 @@
                 color: $menu-item-font-color;
             }
         }
-
+  
         &.active {
             a{
                 color: $menu-item-color-active;
@@ -67,13 +67,13 @@
                     right: 0;
                     top: 9px;
                 }
-
+  
                 i {
                     color: $menu-item-color-active;
                 }
             }
         }
-
+  
         ul.sidebar-submenu {
             &:before {
                 border-color: transparent $submenu-arrow-bg transparent transparent;
@@ -122,7 +122,7 @@
                             background-color: $menu-item-bg-color-hover;   
                         }
                     }
-
+  
                     a {
                         color: $menu-item-color;
                         background-color: $menu-item-bg-color;
@@ -133,14 +133,14 @@
                 }
             }
         }
-
+  
         &:hover,
         &:focus {
             ul.sidebar-submenu {
                 display: block;
             }
         }
-
+  
         &.collapse_menu {
            .collapse_button {
                 padding: 10px;
@@ -156,13 +156,13 @@
            } 
         }
     }
-}
-
-
-
-//  For Collapsed menu
-
-body.menu_collapsed {
+  }
+  
+  
+  
+  //  For Collapsed menu
+  
+  body.menu_collapsed {
     .sidebar {
         width: 60px;
         .sidebar-navigation li {
@@ -197,7 +197,7 @@ body.menu_collapsed {
                     opacity: 0;
                     right: auto;
                 }
-
+  
                 &:hover {
                     ul.sidebar-submenu {
                         transition: all 200ms ease-in-out;
@@ -208,4 +208,4 @@ body.menu_collapsed {
         }
         
     }
-}
+  }

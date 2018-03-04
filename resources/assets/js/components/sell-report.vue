@@ -24,6 +24,7 @@
   <table class="table">
       <tr>
           <th>Sell ID</th>
+          <th>Buyer</th>
           <th>Time</th>
           <th>Product Name</th>
           <th>U. Sell Price</th>
@@ -36,6 +37,8 @@
       
       <tr v-for="s in filteredSells">
           <td>{{ s.sell_id }}</td>
+          <td v-if="s.buyer != null"><a :href="`/customers/${s.buyer.id}`">{{ s.buyer.name }}</a></td>
+          <td v-if="s.buyer == null">Guest Buyer</td>
           <td>{{ s.date }}&nbsp;&nbsp;&nbsp;{{ s.time }}</td>
           <td>{{ s.product_name }}</td>
           <td>{{ s.sell_unit_price }}</td>

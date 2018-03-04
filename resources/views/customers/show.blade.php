@@ -8,7 +8,11 @@
             <div class="col-md-8 mr-auto ml-auto">
                 <div class="text-center">
                     <h1>{{ $customer->name }}</h1>
+                    <a href="{{ route('customers.edit' , $customer->id ) }}"><b>[Edit]</b></a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="{{ route('shoppinghistory' , $customer->id) }}"><b>[Shopping History]</b></a>
                 </div>
+                <br>
                 <table class="table">
                     <tr>
                         <td><b>Email:</b></td>
@@ -27,7 +31,6 @@
                         <td>{{ $customer->note }}</td>
                     </tr>
                 </table>
-                <a href="{{ route('customers.edit' , $customer->id ) }}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
             </div>
         </div>
     </div>

@@ -27,7 +27,7 @@
 
 			</li>
 			<li class="custom-dropdown">
-				<a href="{{ route('customers.index') }}"><i aria-hidden="true" class="fa fa-user"></i> Sells</a>
+				<a href="{{ route('customers.index') }}"><i aria-hidden="true" class="fa fa-user"></i>Customers</a>
 			
 				<ul class="sidebar-submenu">
 					<li><a href="{{ route('customers.index') }}">All Customers</a></li>

@@ -8,6 +8,7 @@
             <div class="col-md-8 mr-auto ml-auto">
                 <div class="text-center">
                     <h1>Edit Customer</h1>
+                    <a href="{{ route('customers.show' , $customer->id) }}"><b>[Customer Details]</b></a>
                 </div>
                 <form action="{{ route('customers.update' , $customer->id) }}" method="POST">
                     {{ csrf_field() }}

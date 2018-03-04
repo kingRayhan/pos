@@ -14,6 +14,7 @@ Route::get('/apirequest/sells/index' , 'SellApiController@index');
 
 Route::resource('customers' , 'CustomerController');
 Route::post('apirequest/customers/index' , 'CustomerController@indexApi');
+Route::get('customers/{customer}/shoppinghistory' , 'CustomerController@shoppinghistory')->name('shoppinghistory');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');

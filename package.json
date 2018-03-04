@@ -21,6 +21,9 @@
     },
     "dependencies": {
         "hchs-vue-charts": "^1.2.8",
-        "print-js": "^1.0.31"
+        "print-js": "^1.0.31",
+        "select2": "~4.0",
+        "sweetalert": "^2.1.0",
+        "vue-select2": "^0.2.6"
     }
 }

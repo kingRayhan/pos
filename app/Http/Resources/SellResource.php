@@ -23,6 +23,7 @@ class SellResource extends JsonResource
             'total_buy_price' => $this->product->buy_price * $this->quantity,
             'total_sell_price' => $this->quantity * $this->sell_price,
             'net_profit' => ($this->quantity * $this->sell_price) - ($this->product->buy_price * $this->quantity),
+            'buyer' => $this->buyer,
             'date' => $this->created_at->format('d/m/Y'),
             'time' => $this->created_at->format('g:i:s a')
         ];

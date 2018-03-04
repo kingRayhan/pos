@@ -18,7 +18,7 @@
                                 type="text" 
                                 name="name" 
                                 class="form-control" 
-                                placeholder="Product Name">
+                                placeholder="Product Name" value="{{ old('name') }}">
                         </div>
                         <div class="form-group">
                             <label for="buy_price">Buying Price:</label>
@@ -27,7 +27,7 @@
                                 type="text" 
                                 class="form-control" 
                                 name="buy_price" 
-                                placeholder="Buying Price">
+                                placeholder="Buying Price" value="{{ old('buy_price') }}">
                         </div>
                         <div class="form-group">
                             <label for="sell_price">Selling Price:</label>
@@ -36,7 +36,7 @@
                             type="text" 
                             class="form-control" 
                             name="sell_price" 
-                            placeholder="Selling Price">
+                            placeholder="Selling Price" value="{{ old('sell_price') }}">
                         </div>
                         <div class="form-group">
                             <label for="stock">Stock Limit:</label>
@@ -45,7 +45,7 @@
                             type="text" 
                             class="form-control" 
                             name="stock" 
-                            placeholder="Stock Limit">
+                            placeholder="Stock Limit" value="{{ old('stock') }}">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Save</button>

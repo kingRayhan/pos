@@ -3,14 +3,16 @@
         <div class="col-md-8 ml-auto mr-auto">
             <h1 v-if="!confirmPurchase">Insert Product Key</h1>
             <div class="form-group" v-if="!confirmPurchase">
-                <input type="text" placeholder="Put Product Key" class="form-control product-id" id="product_key" v-model="productKey">
+                <input type="text" placeholder="Put Product Key" class="form-control product-id" id="product_key" v-model="productKey" autofocus>
             </div>
-
             <div v-if="!confirmPurchase">
                 <div v-if="bags.length">
                     <h3>Total Bills: {{ totalBills }}</h3>
                     <div class="pt-1 pb-3">
                         <button class="btn btn-primary" @click="confirmPurchases">Confirm Purchase</button>
+                        <select v-model="buyer_id" class="buyer_id">
+                            <option v-for="c in customers" v-text="c.name" :value="c.customer_id"></option>
+                        </select>
                     </div>
                 </div>
                 <table class="table" v-if="bags.length">
@@ -21,7 +23,7 @@
                         <th width="15%">Net Price</th>
                     </tr>
 
-                    <single-cart v-for="(product,index) in bags" :key="product.id" :product="product" @remove="removeItem(index)"></single-cart>             
+                    <single-cart v-for="(product,index) in bags" :key="product.id" :product="product" @remove="removeItem(index)"></single-cart>    
                     
                 </table> 
             </div>
@@ -43,19 +45,28 @@
                 <button class="btn btn-primary" @click="sellAgain">Try Again</button>
             </div>
         </div>
-         
-
+        
     </div>
 </template>
 
 <script>
 export default {
+    created()
+    {
+        axios
+        .post(`${AppRootPath}/apirequest/customers/index`)
+        .then( res => {
+            this.customers = res.data.data;
+        } );
+    },
     data(){
         return{
             productKey: '',
             bags: [],
             confirmPurchase: false,
-            errorHappened: false
+            errorHappened: false,
+            customers: '',
+            buyer_id: ''
         }
     },
     watch: {
@@ -68,10 +79,8 @@ export default {
             let tb = 0;
             this.bags.forEach((p) => {
                 tb += parseInt(p.sell_price) * parseInt(p.quantity);
-            })
-
+            });
             return tb;
-
         }
     },
     methods: {
@@ -81,6 +90,24 @@ export default {
                     axios
                     .post(`${AppRootPath}/products/getProductData/${this.productKey}`)
                     .then((p) => {
+                        
+                        if( p.data.length == 0 ){
+                            swal({
+                                title: "Product Not founded",
+                                icon: "error",
+                                dangerMode: true,
+                            })
+                            .then( close => {
+                                if(close)
+                                {
+                                    document.querySelector('#product_key').focus();
+                                    this.productKey = '';
+                                }
+                            })
+                            
+                            return;
+                        } 
+
                         var _this = this;
                         function addProduct(product){
                             var newProduct = {
@@ -111,7 +138,6 @@ export default {
         ),
         removeItem(index){
             this.bags.splice(index , 1);
-            // console.log(index);
         },
         sellAgain()
         {
@@ -123,7 +149,7 @@ export default {
         {
             var _this = this;
             axios
-            .post(`/sells/sellProduct/`, this.bags )
+            .post(`/sells/sellProduct/`, { bags: this.bags , customer_id: this.buyer_id } )
             .then( res => {
                 this.confirmPurchase = true;
             } )
@@ -167,5 +193,10 @@ export default {
     padding: 44px 0;
     border-radius: 50%;
     margin-top: 35px;
+}
+
+.buyer_id{
+    border: 1px solid #DDD;
+    padding: 7px;
 }
 </style>

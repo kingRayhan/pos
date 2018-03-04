@@ -89,13 +89,14 @@ class SellController extends Controller
     public function sellProduct(Request $request)
     {
         $products = json_decode($request->getContent() , true);
-
-        foreach( $products as $product )
+        $customer_id = $products['customer_id'];
+        foreach( $products['bags'] as $product )
         {
             Sell::create([
                 'product_id' => $product['product_id'],
                 'sell_price' => $product['sell_price'],
-                'quantity' => $product['quantity']
+                'quantity' => $product['quantity'],
+                'customer_id' => $customer_id
             ]);
             $stock = Product::find($product['product_id']);
             $stock->update([

@@ -104,4 +104,10 @@ class CustomerController extends Controller
     {
         //
     }
+
+
+    function shoppinghistory(Customer $customer)
+    {
+        return view('customers.shopping_history' , compact('customer'));
+    }
 }
