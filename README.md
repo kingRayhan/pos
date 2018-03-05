@@ -6,7 +6,7 @@ composer install
 npm install
 ```
 
-## Make sdatabase
+## Make database
 ```bash
 php artisan key:generate
 cp .env.example .env
