@@ -40,17 +40,20 @@
 @stop
 
 @section('page-content')
-    <div class="container pt-5">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="text-uppercase pb-2">All Products</h1>
-                <a class="btn btn-primary" href="{{ route('products.create') }}">Add New</a>
+                <h1 class="text-uppercase pb-1">All Products</h1>
+                <div class="pt-2 pb-4">
+                    <a class="btn btn-primary" href="{{ route('products.create') }}">Add New</a>
+                </div>
                 <table id="datatable" class="table table-hover">
                     <thead>
                         <tr>
                             <th width="6%">ID#</th>
                             <th width="20%">Product Name</th>
                             <th width="20%">Barcode</th>
+                            <td>Category</td>
                             <th>Buy Price</th>
                             <th>Sell Price</th>
                             <th>Stock</th>
@@ -76,6 +79,13 @@
                                     type: 'html',
                                     documentTitle: 'Product Barcode Sticker'
                                 })"><i class="fa fa-print"></i></button>
+                            </td>
+                            <td>
+                                @if($product->category)
+                                    <a href="#">{{ $product->category->name }}</a>
+                                @else
+                                    No Category
+                                @endif
                             </td>
                             <td>{{ $product->buy_price }}</td>
                             <td>{{ $product->sell_price }}</td>

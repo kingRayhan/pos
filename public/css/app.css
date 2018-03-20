@@ -10843,3 +10843,15 @@ body.menu_collapsed .main-content {
   margin-left: 60px;
 }
 
+.dokan-navbar {
+  background-color: #0000F0;
+}
+
+.alert-danger {
+  color: #FFF;
+  background-color: #f94b5b;
+  border-color: #f94b5b;
+  border-radius: 0;
+  font-weight: bold;
+}
+

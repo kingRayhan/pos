@@ -4,6 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8 pt-5">
+            <div class="text-center pt-2 pb-5">
+                <h3>Dokan POS Management System</h3>
+            </div>
             <div class="card">
                 <div class="card-header">Login</div>
 

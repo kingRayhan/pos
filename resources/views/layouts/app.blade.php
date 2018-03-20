@@ -36,6 +36,7 @@
 
 	<!-- START MAIN CONTENT -->
 	<main class="main-content">
+		@include('partials.navbar')
 		@include('errors')
 		@yield('page-content')
 	</main>

@@ -49,7 +49,7 @@ class CustomerController extends Controller
             'address' => $request->address,
             'note' => $request->note
         ]);
-        
+        return redirect()->route('customers.index');
     }
 
     /**

@@ -15,6 +15,7 @@
 				<ul class="sidebar-submenu">
 					<li><a href="{{ route('products.index') }}">All Products</a></li>
 					<li><a href="{{ route('products.create') }}">Add New Product</a></li>
+					<li><a href="{{ route('product_categories.index') }}">Categories</a></li>
 				</ul>
 			</li>
 			<li class="custom-dropdown">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ProductCategory;
 use App\Sell;
 use App\Product;
 use Illuminate\Http\Request;
@@ -27,7 +28,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $product_cats = ProductCategory::all();
+        return view('products.create' , compact('product_cats'));
     }
 
     /**
@@ -43,8 +45,9 @@ class ProductController extends Controller
             'buy_price' => $request->buy_price,
             'sell_price' => $request->sell_price,
             'stock' => $request->stock,
+            'product_category_id' => $request->product_category_id == 'null' ? NULL : $request->product_category_id
         ]);
-        
+
         return redirect()->route('products.index');
         
     }

@@ -2,13 +2,18 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-require('print-js');
-// require('select2');
-require('chart.js');
-import swal from 'sweetalert';
-require('hchs-vue-charts');
 
-Vue.use(VueCharts);
+/**
+ * Jquery Plugins
+ */
+require('print-js');
+// select 2
+require('select2');
+require('select2/src/scss/core.scss');
+require('sweetalert');
+// require('chart.js');
+// require('hchs-vue-charts');
+// Vue.use(VueCharts);
 
 
 
@@ -31,5 +36,7 @@ $(document).ready(function() {
     $(".collapse_menu").on('click', function(){
         $("body").toggleClass("menu_collapsed");
     });
+
+    $('.select2').select2();
     
 });
