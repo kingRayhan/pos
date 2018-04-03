@@ -37,7 +37,25 @@
                     quantity: 1
 
                 };
-                this.bags.push(newProduct);
+
+                var founded = false;
+
+                if( this.bags.length )
+                {
+                    this.bags.forEach( item => {
+                        if( item.product_id == newProduct.product_id){
+                            item.quantity++;
+                            founded = true;
+                        }
+                    } );
+                }
+
+                if( !founded )
+                {
+                    this.bags.push(newProduct);
+                }
+
+
                 this.$emit('bagsUpdated' , this.bags);
             },
             removeProduct(index)

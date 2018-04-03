@@ -57450,7 +57450,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
 
                     // Emit fetched product
-                    _this.$emit('fetchedProduct', p.data);
+                    var fetchedProduct = {
+                        name: p.data.name,
+                        product_id: p.data.id,
+                        quantity: 1,
+                        sell_price: p.data.sell_price
+                    };
+                    _this.$emit('fetchedProduct', fetchedProduct);
                     _this.productKey = '';
                 });
             }
@@ -57634,7 +57640,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 quantity: 1
 
             };
-            this.bags.push(newProduct);
+
+            var founded = false;
+
+            if (this.bags.length) {
+                this.bags.forEach(function (item) {
+                    if (item.product_id == newProduct.product_id) {
+                        item.quantity++;
+                        founded = true;
+                    }
+                });
+            }
+
+            if (!founded) {
+                this.bags.push(newProduct);
+            }
+
             this.$emit('bagsUpdated', this.bags);
         },
         removeProduct: function removeProduct(index) {

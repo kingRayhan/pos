@@ -48,7 +48,13 @@
                                 }
 
                                 // Emit fetched product
-                                this.$emit('fetchedProduct' , p.data);
+                                const fetchedProduct = {
+                                    name: p.data.name,
+                                    product_id: p.data.id,
+                                    quantity: 1,
+                                    sell_price: p.data.sell_price
+                                };
+                                this.$emit('fetchedProduct' , fetchedProduct);
                                 this.productKey = '';
                             });
                     }
