@@ -42,7 +42,7 @@
 @stop
 
 @section('page-content')
-    <div class="container pt-5">
-        <search-product></search-product>
+    <div class="container-fluid">
+        <sell-now></sell-now>
     </div>
 @stop

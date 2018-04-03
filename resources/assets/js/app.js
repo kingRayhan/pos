@@ -26,6 +26,13 @@ Vue.component('customer-list', require('./components/customer-list.vue'));
 Vue.component('vue-select', require("vue-select2"));
 
 
+Vue.component('sell-now' , require('./components/sells/SellNow.vue'));
+Vue.component('products' , require('./components/sells/products.vue'));
+Vue.component('customers' , require('./components/sells/customers.vue'));
+Vue.component('category' , require('./components/sells/category.vue'));
+Vue.component('shopping-card' , require('./components/sells/shopping-card.vue'));
+
+
 const app = new Vue({
     el: '#app'
 });

@@ -14,12 +14,23 @@ Route::middleware('auth')->group(function () {
      */
     Route::get('product_categories/{id}/products' , 'ProductCategoryController@products')->name('product_category.products');
 
-    Route::post('/products/getProductData/{product_id}' , 'ProductController@getProductData');
+
     Route::post('/sells/sellProduct/' , 'SellController@sellProduct');
-    Route::get('/apirequest/sells/index' , 'SellApiController@index');
     Route::resource('customers' , 'CustomerController');
-    Route::post('apirequest/customers/index' , 'CustomerController@indexApi');
     Route::get('customers/{customer}/shoppinghistory' , 'CustomerController@shoppinghistory')->name('shoppinghistory');
+
+
+
+
+    /**
+     * API
+     */
+    Route::get('/apirequest/sells/index' , 'SellApiController@index');
+    Route::post('apirequest/customers/index' , 'CustomerController@indexApi');
+    Route::get('apirequest/products/index' , 'ProductApiController@index');
+    Route::get('apirequest/products/categories' , 'ProductApiController@categories');
+
+    Route::post('/products/getProductData/{product_id}' , 'ProductController@getProductData');
 });
 
 

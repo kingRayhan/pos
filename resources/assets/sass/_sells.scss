@@ -1,0 +1,38 @@
+.selectbox {
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+
+  ul.list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-height: 300px;
+    overflow-y: scroll;
+    li label {
+      margin: 4px 0;
+      padding: 8px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+  }
+
+
+
+
+  .single-product {
+    border: 1px solid #DDD;
+    padding: 6px;
+    margin: 6px 0;
+    &:hover{
+      background-color: #EEE;
+      cursor: pointer;
+    }
+  }
+}
+input.search-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #DDD;
+}
