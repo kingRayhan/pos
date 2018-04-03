@@ -56244,7 +56244,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.col-1[data-v-24dc5242], .col-2[data-v-24dc5242], .col-3[data-v-24dc5242], .col-4[data-v-24dc5242], .col-5[data-v-24dc5242], .col-6[data-v-24dc5242], .col-7[data-v-24dc5242], .col-8[data-v-24dc5242], .col-9[data-v-24dc5242], .col-10[data-v-24dc5242], .col-11[data-v-24dc5242], .col-12[data-v-24dc5242], .col[data-v-24dc5242], .col-auto[data-v-24dc5242], .col-sm-1[data-v-24dc5242], .col-sm-2[data-v-24dc5242], .col-sm-3[data-v-24dc5242], .col-sm-4[data-v-24dc5242], .col-sm-5[data-v-24dc5242], .col-sm-6[data-v-24dc5242], .col-sm-7[data-v-24dc5242], .col-sm-8[data-v-24dc5242], .col-sm-9[data-v-24dc5242], .col-sm-10[data-v-24dc5242], .col-sm-11[data-v-24dc5242], .col-sm-12[data-v-24dc5242], .col-sm[data-v-24dc5242], .col-sm-auto[data-v-24dc5242], .col-md-1[data-v-24dc5242], .col-md-2[data-v-24dc5242], .col-md-3[data-v-24dc5242], .col-md-4[data-v-24dc5242], .col-md-5[data-v-24dc5242], .col-md-6[data-v-24dc5242], .col-md-7[data-v-24dc5242], .col-md-8[data-v-24dc5242], .col-md-9[data-v-24dc5242], .col-md-10[data-v-24dc5242], .col-md-11[data-v-24dc5242], .col-md-12[data-v-24dc5242], .col-md[data-v-24dc5242], .col-md-auto[data-v-24dc5242], .col-lg-1[data-v-24dc5242], .col-lg-2[data-v-24dc5242], .col-lg-3[data-v-24dc5242], .col-lg-4[data-v-24dc5242], .col-lg-5[data-v-24dc5242], .col-lg-6[data-v-24dc5242], .col-lg-7[data-v-24dc5242], .col-lg-8[data-v-24dc5242], .col-lg-9[data-v-24dc5242], .col-lg-10[data-v-24dc5242], .col-lg-11[data-v-24dc5242], .col-lg-12[data-v-24dc5242], .col-lg[data-v-24dc5242], .col-lg-auto[data-v-24dc5242], .col-xl-1[data-v-24dc5242], .col-xl-2[data-v-24dc5242], .col-xl-3[data-v-24dc5242], .col-xl-4[data-v-24dc5242], .col-xl-5[data-v-24dc5242], .col-xl-6[data-v-24dc5242], .col-xl-7[data-v-24dc5242], .col-xl-8[data-v-24dc5242], .col-xl-9[data-v-24dc5242], .col-xl-10[data-v-24dc5242], .col-xl-11[data-v-24dc5242], .col-xl-12[data-v-24dc5242], .col-xl[data-v-24dc5242], .col-xl-auto[data-v-24dc5242]\n   {\n       padding-left: 3px;\n       padding-right: 3px;\n}\n", ""]);
+exports.push([module.i, "\n.col-1[data-v-24dc5242], .col-2[data-v-24dc5242], .col-3[data-v-24dc5242], .col-4[data-v-24dc5242], .col-5[data-v-24dc5242], .col-6[data-v-24dc5242], .col-7[data-v-24dc5242], .col-8[data-v-24dc5242], .col-9[data-v-24dc5242], .col-10[data-v-24dc5242], .col-11[data-v-24dc5242], .col-12[data-v-24dc5242], .col[data-v-24dc5242], .col-auto[data-v-24dc5242], .col-sm-1[data-v-24dc5242], .col-sm-2[data-v-24dc5242], .col-sm-3[data-v-24dc5242], .col-sm-4[data-v-24dc5242], .col-sm-5[data-v-24dc5242], .col-sm-6[data-v-24dc5242], .col-sm-7[data-v-24dc5242], .col-sm-8[data-v-24dc5242], .col-sm-9[data-v-24dc5242], .col-sm-10[data-v-24dc5242], .col-sm-11[data-v-24dc5242], .col-sm-12[data-v-24dc5242], .col-sm[data-v-24dc5242], .col-sm-auto[data-v-24dc5242], .col-md-1[data-v-24dc5242], .col-md-2[data-v-24dc5242], .col-md-3[data-v-24dc5242], .col-md-4[data-v-24dc5242], .col-md-5[data-v-24dc5242], .col-md-6[data-v-24dc5242], .col-md-7[data-v-24dc5242], .col-md-8[data-v-24dc5242], .col-md-9[data-v-24dc5242], .col-md-10[data-v-24dc5242], .col-md-11[data-v-24dc5242], .col-md-12[data-v-24dc5242], .col-md[data-v-24dc5242], .col-md-auto[data-v-24dc5242], .col-lg-1[data-v-24dc5242], .col-lg-2[data-v-24dc5242], .col-lg-3[data-v-24dc5242], .col-lg-4[data-v-24dc5242], .col-lg-5[data-v-24dc5242], .col-lg-6[data-v-24dc5242], .col-lg-7[data-v-24dc5242], .col-lg-8[data-v-24dc5242], .col-lg-9[data-v-24dc5242], .col-lg-10[data-v-24dc5242], .col-lg-11[data-v-24dc5242], .col-lg-12[data-v-24dc5242], .col-lg[data-v-24dc5242], .col-lg-auto[data-v-24dc5242], .col-xl-1[data-v-24dc5242], .col-xl-2[data-v-24dc5242], .col-xl-3[data-v-24dc5242], .col-xl-4[data-v-24dc5242], .col-xl-5[data-v-24dc5242], .col-xl-6[data-v-24dc5242], .col-xl-7[data-v-24dc5242], .col-xl-8[data-v-24dc5242], .col-xl-9[data-v-24dc5242], .col-xl-10[data-v-24dc5242], .col-xl-11[data-v-24dc5242], .col-xl-12[data-v-24dc5242], .col-xl[data-v-24dc5242], .col-xl-auto[data-v-24dc5242]\n   {\n       padding-left: 3px;\n       padding-right: 3px;\n}\n#root[data-v-24dc5242]{\n       margin-top: -15px;\n}\nhtml [data-v-24dc5242], body[data-v-24dc5242]{\n       height: 100%;\n}\n.scroll[data-v-24dc5242]{\n       /**/\n}\n", ""]);
 
 // exports
 
@@ -56255,6 +56255,9 @@ exports.push([module.i, "\n.col-1[data-v-24dc5242], .col-2[data-v-24dc5242], .co
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -56319,7 +56322,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.selected_customer = customer;
         },
         pushProductByProductListClick: function pushProductByProductListClick(product) {
-            this.pushProduct = product;
+            //                this.pushProduct = product;
+            this.$refs.cartCom.addProduct(product);
         },
         pushProductByBarcode: function pushProductByBarcode(product) {
             this.pushProduct = product;
@@ -56363,7 +56367,7 @@ var render = function() {
       ? _c("div", { staticClass: "row" }, [
           _c(
             "div",
-            { staticClass: "col-md-3" },
+            { staticClass: "col-md-3 scroll" },
             [
               _c("products", {
                 attrs: { categorySelected: _vm.selected_category_id },
@@ -56436,6 +56440,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("cart", {
+                  ref: "cartCom",
                   attrs: { newProduct: _vm.pushProduct },
                   on: { bagsUpdated: _vm.updateBags }
                 })
@@ -56447,7 +56452,26 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.confirmPurchase
-      ? _c("div", [_c("h1", [_vm._v("Purchase confirmed")])])
+      ? _c("div", [
+          _c("div", [
+            _c("h1", { staticClass: "pull-left pr-5" }, [
+              _vm._v("Purchase confirmed")
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    _vm.confirmPurchase = false
+                  }
+                }
+              },
+              [_vm._v("Sell Again")]
+            )
+          ])
+        ])
       : _vm._e()
   ])
 }

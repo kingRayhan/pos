@@ -1,7 +1,7 @@
 <template>
     <div id="root">
         <div class="row" v-if="!confirmPurchase">
-            <div class="col-md-3">
+            <div class="col-md-3 scroll">
                 <products :categorySelected="selected_category_id" @productSelected="pushProductByProductListClick"/>
             </div>
 
@@ -29,12 +29,15 @@
                     </div>
 
                     <barcode @fetchedProduct="pushProductByBarcode" />
-                    <cart :newProduct="pushProduct" @bagsUpdated="updateBags"/>
+                    <cart ref="cartCom" :newProduct="pushProduct" @bagsUpdated="updateBags"/>
                 </div>
             </div>
         </div>
         <div v-if="confirmPurchase">
-            <h1>Purchase confirmed</h1>
+            <div>
+                <h1 class="pull-left pr-5">Purchase confirmed</h1>
+                <button @click="confirmPurchase = false" class="btn btn-primary">Sell Again</button>
+            </div>
 
         </div>
     </div><!--#root-->
@@ -66,7 +69,8 @@
             },
             pushProductByProductListClick(product)
             {
-                this.pushProduct = product;
+//                this.pushProduct = product;
+                this.$refs.cartCom.addProduct(product);
             },
             pushProductByBarcode(product)
             {
@@ -108,5 +112,14 @@
     {
         padding-left: 3px;
         padding-right: 3px;
+    }
+    #root{
+        margin-top: -15px;
+    }
+    html , body{
+        height: 100%;
+    }
+    .scroll{
+        /**/
     }
 </style>
