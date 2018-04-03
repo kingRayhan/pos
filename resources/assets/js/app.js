@@ -31,6 +31,8 @@ Vue.component('products' , require('./components/sells/products.vue'));
 Vue.component('customers' , require('./components/sells/customers.vue'));
 Vue.component('category' , require('./components/sells/category.vue'));
 Vue.component('shopping-card' , require('./components/sells/shopping-card.vue'));
+Vue.component('barcode' , require('./components/sells/barcode-scanner.vue'));
+Vue.component('cart' , require('./components/sells/cart.vue'));
 
 
 const app = new Vue({

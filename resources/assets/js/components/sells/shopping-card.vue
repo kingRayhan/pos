@@ -3,151 +3,44 @@
         <table class="table table-bordered">
             <tr>
                 <td><b>Customer:</b></td>
-                <td>King Rayhan</td>
+                <td>{{ customer.name ? customer.name : 'Guest Customer' }}</td>
             </tr>
             <tr>
                 <td><b>Total Bill:</b></td>
                 <td>14586</td>
             </tr>
         </table>
-        <br>
-        <table class="table table-bordered">
-                <tr>
-                    <th>Product Name</th>
-                    <th>Sell Price</th>
-                    <th>Quantity</th>
-                    <th>Net Price</th>
-                </tr>
-                <tr class="single-product-row">
-                    <td>Lax Shaban</td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td>
-                        <span id="net_price">
-                            145
-                        </span>
-                    </td>
-                    <button @click="$emit('remove')"><i class="fa fa-times"></i></button>
-                </tr>
-                <tr class="single-product-row">
-                    <td>Lax Shaban</td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td>
-                        <span id="net_price">
-                            145
-                        </span>
-                    </td>
-                    <button @click="$emit('remove')"><i class="fa fa-times"></i></button>
-                </tr>
-                <tr class="single-product-row">
-                    <td>Lax Shaban</td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td>
-                        <span id="net_price">
-                            145
-                        </span>
-                    </td>
-                    <button @click="$emit('remove')"><i class="fa fa-times"></i></button>
-                </tr>
-                <tr class="single-product-row">
-                    <td>Lax Shaban</td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td>
-                        <span id="net_price">
-                            145
-                        </span>
-                    </td>
-                    <button @click="$emit('remove')"><i class="fa fa-times"></i></button>
-                </tr>
-                <tr class="single-product-row">
-                    <td>Lax Shaban</td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td>
-                        <span id="net_price">
-                            145
-                        </span>
-                    </td>
-                    <button @click="$emit('remove')"><i class="fa fa-times"></i></button>
-                </tr>
-                <tr class="single-product-row">
-                    <td>Lax Shaban</td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td>
-                        <span id="net_price">
-                            145
-                        </span>
-                    </td>
-                    <button @click="$emit('remove')"><i class="fa fa-times"></i></button>
-                </tr>
-                <tr class="single-product-row">
-                    <td>Lax Shaban</td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td>
-                        <span id="net_price">
-                            145
-                        </span>
-                    </td>
-                    <button @click="$emit('remove')"><i class="fa fa-times"></i></button>
-                </tr>
-                <tr class="single-product-row">
-                    <td>Lax Shaban</td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td>
-                        <span id="net_price">
-                            145
-                        </span>
-                    </td>
-                    <button @click="$emit('remove')"><i class="fa fa-times"></i></button>
-                </tr>
-                <tr class="single-product-row">
-                    <td>Lax Shaban</td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td>
-                        <span id="net_price">
-                            145
-                        </span>
-                    </td>
-                    <button @click="$emit('remove')"><i class="fa fa-times"></i></button>
-                </tr>
-                <tr class="single-product-row">
-                    <td>Lax Shaban</td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td>
-                        <span id="net_price">
-                            145
-                        </span>
-                    </td>
-                    <button @click="$emit('remove')"><i class="fa fa-times"></i></button>
-                </tr>
-                <tr class="single-product-row">
-                    <td>Lax Shaban</td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td><input type="text" id="sell_price" class="cart-input"></td>
-                    <td>
-                        <span id="net_price">
-                            145
-                        </span>
-                    </td>
-                    <button @click="$emit('remove')"><i class="fa fa-times"></i></button>
-                </tr>
-        </table>
+
+        <h5 class="text-uppercase">Shopping card</h5>
+        <barcode @fetchedProduct="fetchedProduct" />
+        <cart :newProduct="fetchNewProduct"/>
+
     </div>
 </template>
 
-
-<style scoped>
-    .cart-input{
-        width: 100%;
-        border: 1px solid #DDD;
-        padding: 3px;
+<script>
+    export default {
+        props: ['customer' , 'selectedProduct'],
+        data()
+        {
+            return {
+                fetchNewProduct: ''
+            }
+        },
+        methods: {
+            fetchedProduct(product)
+            {
+                this.fetchNewProduct = product;
+            }
+        },
+        watch: {
+            selectedProduct(newProduct)
+            {
+                this.fetchedProduct(newProduct);
+            }
+        }
     }
+</script>
+<style scoped>
+
 </style>

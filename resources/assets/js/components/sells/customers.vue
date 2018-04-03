@@ -1,11 +1,11 @@
 <template>
     <form>
         <div class="selectbox">
-            <input type="reset" value="x" class="deselect">
+            <input type="reset" value="x" class="deselect" @click="$emit('customerSelected' , '' )">
             <input type="text" class="search-input" placeholder="Select Customer" v-model="searchCustomer">
             <ul class="list">
                 <li v-for="customer in filteredCustomer">
-                    <label :data-customer-id="customer.customer_id">
+                    <label :data-customer-id="customer.customer_id" @click="$emit('customerSelected' , customer)">
                         <input type="radio" name="customer"> {{ customer.name }}
                     </label>
                 </li>

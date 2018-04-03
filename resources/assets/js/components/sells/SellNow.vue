@@ -1,14 +1,14 @@
 <template>
     <div class="row">
         <div class="col-md-3">
-            <products :categorySelected="selected_category_id" />
+            <products :categorySelected="selected_category_id" @productSelected="pushProductToCard"/>
         </div>
         <div class="col-md-3">
             <category @categorySelected="categorySelected" />
-            <customers />
+            <customers @customerSelected="customerSelected"/>
         </div>
         <div class="col-md-6">
-            <shopping-card />
+            <shopping-card :customer="selected_customer" :selectedProduct="pushProductToCard"/>
         </div>
     </div>
 </template>
@@ -17,13 +17,23 @@
         data()
         {
             return{
-                selected_category_id: ''
+                selected_category_id: '',
+                selected_customer: '',
+                productSelected: ''
             }
         },
         methods: {
             categorySelected(cat_id)
             {
                 this.selected_category_id = cat_id;
+            },
+            customerSelected( customer )
+            {
+                this.selected_customer = customer;
+            },
+            pushProductToCard(product)
+            {
+                this.productSelected = product;
             }
         }
     }

@@ -5,7 +5,7 @@
 
 
 
-            <div class="single-product" v-for="product in filteredProduct">
+            <div class="single-product" v-for="product in filteredProduct" @click="$emit('productSelected' , product)">
                 <b>{{ product.name }}</b>
                 <br>
                 <b>Price:</b> {{ product.price }}
