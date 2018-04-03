@@ -8,7 +8,7 @@
             <div class="single-product" v-for="product in filteredProduct" @click="$emit('productSelected' , product)">
                 <b>{{ product.name }}</b>
                 <br>
-                <b>Price:</b> {{ product.price }}
+                <b>Price:</b> {{ product.sell_price }}
                 <br>
                 <b>Stock:</b> {{ product.stock }} <br>
                 <b>Category:</b> {{ product.category }} <br>

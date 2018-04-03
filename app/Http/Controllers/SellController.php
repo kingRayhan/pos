@@ -96,7 +96,7 @@ class SellController extends Controller
                 'product_id' => $product['product_id'],
                 'sell_price' => $product['sell_price'],
                 'quantity' => $product['quantity'],
-                'customer_id' => $customer_id
+                'customer_id' => NULL
             ]);
             $stock = Product::find($product['product_id']);
             $stock->update([

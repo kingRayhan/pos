@@ -1,21 +1,19 @@
 <template>
-    <table class="table table-bordered">
+    <table class="table table-bordered" v-if="bags.length">
         <tr>
             <th>Product Name</th>
             <th>Sell Price</th>
             <th>Quantity</th>
             <th>Net Price</th>
         </tr>
-        <tr class="single-product-row" v-for="product in bags">
+        <tr class="single-product-row" v-for="(product,i) in bags">
             <td v-text="product.name"></td>
             <td><input type="text" id="sell_price" class="cart-input" v-model="product.sell_price"></td>
-            <td><input type="text" id="sell_price" class="cart-input"></td>
+            <td><input type="text" class="cart-input" v-model="product.quantity"></td>
             <td>
-                <span id="net_price">
-                    145
-                </span>
+                {{ product.sell_price * product.quantity }}
             </td>
-            <button @click="$emit('remove')"><i class="fa fa-times"></i></button>
+            <button @click="removeProduct(i)" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button>
         </tr>
     </table>
 </template>
@@ -26,13 +24,26 @@
         data()
         {
             return {
-                bags: []
+                bags: [],
+                quantity: ''
             }
         },
         methods: {
             addProduct(product){
-                this.bags.push(product)
+                const newProduct = {
+                    product_id: product.product_id,
+                    name: product.name,
+                    sell_price: product.sell_price,
+                    quantity: 1
 
+                };
+                this.bags.push(newProduct);
+                this.$emit('bagsUpdated' , this.bags);
+            },
+            removeProduct(index)
+            {
+                this.bags.splice(index , 1);
+                this.$emit('bagsUpdated' , this.bags);
             }
         },
         watch: {
