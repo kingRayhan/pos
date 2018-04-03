@@ -8,7 +8,7 @@ window.Vue = require('vue');
  */
 require('print-js');
 // select 2
-require('select2');
+window.select2 = require('select2');
 require('select2/src/scss/core.scss');
 require('sweetalert');
 // require('chart.js');
@@ -31,12 +31,10 @@ const app = new Vue({
 });
 
 
-
 $(document).ready(function() {
     $(".collapse_menu").on('click', function(){
         $("body").toggleClass("menu_collapsed");
     });
-
     $('.select2').select2();
     
 });

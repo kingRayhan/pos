@@ -50,9 +50,16 @@ class ProductCategoryController extends Controller
      * @param  \App\ProductCategory  $productCategory
      * @return \Illuminate\Http\Response
      */
-    public function show(ProductCategory $productCategory)
+    public function show($cat_id)
     {
-        //
+//        return view('product_categories.index' , compact('products'));
+    }
+
+
+    public function products($id)
+    {
+        $product_cat = ProductCategory::find($id);
+        return view('product_categories.products' , compact('product_cat'));
     }
 
     /**
@@ -73,14 +80,14 @@ class ProductCategoryController extends Controller
      * @param  \App\ProductCategory  $productCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductCategory $request, ProductCategory $productCategory)
+    public function update(ProductCategoryRequest $request, ProductCategory $productCategory)
     {
-//        ProductCategory::find($productCategory->id)
-//            ->update([
-//                'name' => $request->name,
-//                'desc' => $request->desc
-//            ]);
-//        return redirect()->route('product_categories.index');
+        ProductCategory::find($productCategory->id)
+            ->update([
+                'name' => $request->name,
+                'desc' => $request->desc
+            ]);
+        return redirect()->route('product_categories.index');
     }
 
     /**

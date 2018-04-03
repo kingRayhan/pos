@@ -10,7 +10,8 @@
                     <h3>Total Bills: {{ totalBills }}</h3>
                     <div class="pt-1 pb-3">
                         <button class="btn btn-primary" @click="confirmPurchases">Confirm Purchase</button>
-                        <select v-model="buyer_id" class="buyer_id">
+                        <select v-model="buyer_id" class="buyer_id select2">
+                            <option value="null" selected>No category</option>
                             <option v-for="c in customers" v-text="c.name" :value="c.customer_id"></option>
                         </select>
                     </div>
@@ -50,7 +51,10 @@
 </template>
 
 <script>
-export default {
+export default{
+    mounted() {
+        $('.select2').select2()
+    },
     created()
     {
         axios
@@ -90,7 +94,7 @@ export default {
                     axios
                     .post(`${AppRootPath}/products/getProductData/${this.productKey}`)
                     .then((p) => {
-                        
+
                         if( p.data.length == 0 ){
                             swal({
                                 title: "Product Not founded",
@@ -103,10 +107,10 @@ export default {
                                     document.querySelector('#product_key').focus();
                                     this.productKey = '';
                                 }
-                            })
-                            
+                            });
+
                             return;
-                        } 
+                        }
 
                         var _this = this;
                         function addProduct(product){
@@ -119,7 +123,7 @@ export default {
                             var found = 0;
                             _this.bags.forEach( el => {
                                if( el.product_id == newProduct.product_id ){
-                                   el.quantity++; 
+                                   el.quantity++;
                                    found = 1;
                                }
                             } );
@@ -137,7 +141,7 @@ export default {
             500
         ),
         removeItem(index){
-            this.bags.splice(index , 1);
+            this.bags.splice(index , 1 );
         },
         sellAgain()
         {

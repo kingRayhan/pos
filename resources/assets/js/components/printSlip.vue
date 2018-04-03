@@ -3,6 +3,7 @@
         <button onclick="printJS('printSlip', 'html')" class="btn btn-success">Print</button>
         <div id="printSlip">
             <h2 class="title">Amana SuperShop</h2>
+
             <table border="1" class="print-product-list">
                 <tr>
                     <th width="50%">Name</th>
