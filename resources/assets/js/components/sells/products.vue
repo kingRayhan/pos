@@ -1,10 +1,7 @@
 <template>
     <div class="selectbox">
         <input type="text" class="search-input" placeholder="Pick Product" v-model="searchProduct">
-        <div class="div-list">
-
-
-
+        <div class="div-list products-list-wrp">
             <div class="single-product" v-for="product in filteredProduct" @click="$emit('productSelected' , product)">
                 <b>{{ product.name }}</b>
                 <br>
@@ -14,7 +11,6 @@
                 <b>Category:</b> {{ product.category }} <br>
                 <b>BarCode ID:</b> {{ product.barcode }}
             </div>
-
         </div>
     </div>
 </template>

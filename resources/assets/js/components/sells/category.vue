@@ -1,5 +1,5 @@
 <template>
-    <div class="selectbox">
+    <div class="selectbox" id="categoryList">
         <button class="deselect" @click="$emit('categorySelected' , 'all')">x</button>
         <input type="text" class="search-input" placeholder="Filter Category" v-model="search">
         <div class="div-list">

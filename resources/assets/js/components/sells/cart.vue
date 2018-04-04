@@ -8,8 +8,8 @@
         </tr>
         <tr class="single-product-row" v-for="(product,i) in bags">
             <td v-text="product.name"></td>
-            <td><input type="text" id="sell_price" class="cart-input" v-model="product.sell_price"></td>
-            <td><input type="text" class="cart-input" v-model="product.quantity"></td>
+            <td><input type="number" id="sell_price" class="cart-input" v-model="product.sell_price"></td>
+            <td><input type="number" class="cart-input" v-model="product.quantity"></td>
             <td>
                 {{ product.sell_price * product.quantity }}
             </td>
