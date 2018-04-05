@@ -19,7 +19,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('customers' , 'CustomerController');
     Route::get('customers/{customer}/shoppinghistory' , 'CustomerController@shoppinghistory')->name('shoppinghistory');
 
-
+    /**
+     * Slips
+     */
+    Route::get('/slips' , 'SlipController@index')->name('slips.index');
 
 
     /**

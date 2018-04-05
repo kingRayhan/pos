@@ -27,6 +27,9 @@
 				</ul>
 
 			</li>
+			<li>
+				<a href="{{ route('slips.index') }}">Slips</a>
+			</li>
 			<li class="custom-dropdown">
 				<a href="{{ route('customers.index') }}"><i aria-hidden="true" class="fa fa-user"></i>Customers</a>
 			

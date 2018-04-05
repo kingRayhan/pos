@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Sell;
 use App\Product;
+use App\Slip;
 use Illuminate\Http\Request;
 
 class SellController extends Controller
@@ -90,18 +91,24 @@ class SellController extends Controller
     {
         $products = json_decode($request->getContent() , true);
         $customer_id = $products['customer_id'];
-        foreach( $products['bags'] as $product )
-        {
-            Sell::create([
-                'product_id' => $product['product_id'],
-                'sell_price' => $product['sell_price'],
-                'quantity' => $product['quantity'],
-                'customer_id' => $customer_id
-            ]);
-            $stock = Product::find($product['product_id']);
-            $stock->update([
-                'stock' => $stock->stock - $product['quantity']
-            ]);
-        }
+//        foreach( $products['bags'] as $product )
+//        {
+//            Sell::create([
+//                'product_id' => $product['product_id'],
+//                'sell_price' => $product['sell_price'],
+//                'quantity' => $product['quantity'],
+//                'customer_id' => $customer_id
+//            ]);
+//            $stock = Product::find($product['product_id']);
+//            $stock->update([
+//                'stock' => $stock->stock - $product['quantity']
+//            ]);
+//        }
+
+
+        Slip::create([
+            'slipData' => json_encode($request->getContent() , JSON_UNESCAPED_SLASHES),
+            'customer_id' => $customer_id
+        ]);
     }
 }
