@@ -2,21 +2,30 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <div class="cash-input-group">
-                    <label for="paid-amount">Total Bil (with vat)</label>
-                    <input type="number" class="cash-input" id="paid-amount" placeholder="Total Bil (with vat)" disabled :value="vatWithTotalBill">
+                <div v-if="!isConfirmPurchase">
+                    <div class="cash-input-group">
+                        <label for="paid-amount">Total Bil (with vat)</label>
+                        <input type="number" class="cash-input" id="paid-amount" placeholder="Total Bil (with vat)" disabled :value="vatWithTotalBill">
+                    </div>
+                    <div class="cash-input-group">
+                        <label for="paid-amount">Paid Amount</label>
+                        <input type="number" class="cash-input" id="paid-amount" placeholder="Paid Amount" v-model="paidAmount">
+                    </div>
+                    <div class="cash-input-group">
+                        <label for="paid-amount">Return Amount</label>
+                        <input type="number" class="cash-input" id="paid-amount" placeholder="Return Amount" disabled :value="Math.round(returnAmount , 2)">
+                    </div>
+                    <div class="cash-input-group">
+                        <button class="btn btn-primary btn-sm" @click="makePurchase" v-if=" paidAmount >= vatWithTotalBill">Confirm Purchase</button>
+                        <button class="btn btn-danger btn-sm" @click="$emit('cancelOrder')">Cancel</button>
+                    </div>
                 </div>
-                 <div class="cash-input-group">
-                     <label for="paid-amount">Paid Amount</label>
-                     <input type="number" class="cash-input" id="paid-amount" placeholder="Paid Amount" v-model="paidAmount">
-                </div>
-                 <div class="cash-input-group">
-                     <label for="paid-amount">Return Amount</label>
-                     <input type="number" class="cash-input" id="paid-amount" placeholder="Return Amount" disabled :value="Math.round(returnAmount , 2)">
-                </div>
-                 <div class="cash-input-group">
-                     <button class="btn btn-primary btn-sm">Confirm Purchase</button>
-                     <button class="btn btn-danger btn-sm" @click="$emit('cancelOrder')">Cancel</button>
+                <div v-if="isConfirmPurchase">
+                    <div class="purchase-confirm">
+                        <h2>Purchase confirmed</h2>
+                        <button class="btn btn-primary" onclick="printJS('page-wrap', 'html')"><i class="fa fa-print"></i> Print</button>
+                        <button class="btn btn-warning" @click="$emit('cancelOrder')"><i class="fa fa-angle-left"></i> Back</button>
+                    </div>
                 </div>
             </div>
             <div class="col-md-8">
@@ -28,7 +37,7 @@
 
                     <div class="invoice-provider-details">
                         <div id="identity">
-                            <div id="address">
+                            <div id="address" v-if="customer">
                                 <b>{{ customer.name }}</b>
                                 <br> {{ customer.address }}
                                 <br> Phone: {{ customer.number }}
@@ -108,11 +117,6 @@
                             <td class="left-border top-border">{{ Math.round(returnAmount , 2) }}</td>
                         </tr>
                     </table>
-                    <div id="terms">
-                        <h5>Terms</h5>
-                        <p>Dokan is a shop management system. Developed by <a href="http:www.electronthemes.xyz">Electron Themes</a></p>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -126,13 +130,14 @@
         data()
         {
             return {
-                paidAmount: 0
+                paidAmount: 0,
+                isConfirmPurchase: false
             }
         },
         computed: {
             returnAmount()
             {
-                if( this.paidAmount == 0 ) return 0;
+                if( this.paidAmount == 0 || this.paidAmount < this.vatWithTotalBill ) return 0;
                 return this.paidAmount - this.vatWithTotalBill;
             },
             totalBil()
@@ -154,6 +159,13 @@
                 ];
                 const d = new Date();
                 return `${monthNames[d.getMonth()]} ${d.getDay()}, ${d.getFullYear()}`;
+            }
+        },
+        methods: {
+            makePurchase()
+            {
+                this.$emit('purchased');
+                this.isConfirmPurchase = true;
             }
         }
     }
@@ -331,6 +343,16 @@
         }
         label{
             font-weight: bold;
+        }
+    }
+    .purchase-confirm {
+        border: 1px solid #ddd;
+        padding: 18px;
+        margin-top: 28px;
+        h2{
+            text-transform: uppercase;
+            font-size: 30px;
+            color: var(--primary);
         }
     }
 </style>

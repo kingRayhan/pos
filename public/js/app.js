@@ -55251,7 +55251,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -55276,7 +55275,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             InvoiceData: '',
 
             confirmPurchase: false,
+            doneShopping: false,
             errorHappened: false
+
         };
     },
 
@@ -55328,7 +55329,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "root" } }, [
-    !_vm.confirmPurchase
+    !_vm.doneShopping
       ? _c("div", { staticClass: "row" }, [
           _c(
             "div",
@@ -55392,10 +55393,15 @@ var render = function() {
                     ? _c(
                         "button",
                         {
-                          staticClass: "pull-left btn btn-primary btn-sm",
-                          on: { click: _vm.confirmPurchases }
+                          staticClass:
+                            "pull-left btn btn-primary btn-sm text-uppercase",
+                          on: {
+                            click: function($event) {
+                              _vm.doneShopping = true
+                            }
+                          }
                         },
-                        [_vm._v("ConfirmPurchase")]
+                        [_vm._v("Done")]
                       )
                     : _vm._e()
                 ]),
@@ -55416,15 +55422,16 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.confirmPurchase
+    _vm.doneShopping
       ? _c(
           "div",
           [
             _c("invoice", {
               attrs: { bags: _vm.bagsUpdated, customer: _vm.selected_customer },
               on: {
+                purchased: _vm.confirmPurchases,
                 cancelOrder: function($event) {
-                  _vm.confirmPurchase = false
+                  _vm.doneShopping = false
                 }
               }
             })
@@ -56899,7 +56906,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.cash-input-group[data-v-0838f6eb] {\n  padding: 10px 0;\n}\n.cash-input-group .cash-input[data-v-0838f6eb] {\n    width: 100%;\n    padding: 8px;\n    border: 1px solid #DDD;\n    font-size: 18px;\n}\n.cash-input-group label[data-v-0838f6eb] {\n    font-weight: bold;\n}\n", ""]);
+exports.push([module.i, "\n.cash-input-group[data-v-0838f6eb] {\n  padding: 10px 0;\n}\n.cash-input-group .cash-input[data-v-0838f6eb] {\n    width: 100%;\n    padding: 8px;\n    border: 1px solid #DDD;\n    font-size: 18px;\n}\n.cash-input-group label[data-v-0838f6eb] {\n    font-weight: bold;\n}\n.purchase-confirm[data-v-0838f6eb] {\n  border: 1px solid #ddd;\n  padding: 18px;\n  margin-top: 28px;\n}\n.purchase-confirm h2[data-v-0838f6eb] {\n    text-transform: uppercase;\n    font-size: 30px;\n    color: var(--primary);\n}\n", ""]);
 
 // exports
 
@@ -57032,18 +57039,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['bags', 'customer'],
     data: function data() {
         return {
-            paidAmount: 0
+            paidAmount: 0,
+            isConfirmPurchase: false
         };
     },
 
     computed: {
         returnAmount: function returnAmount() {
-            if (this.paidAmount == 0) return 0;
+            if (this.paidAmount == 0 || this.paidAmount < this.vatWithTotalBill) return 0;
             return this.paidAmount - this.vatWithTotalBill;
         },
         totalBil: function totalBil() {
@@ -57062,6 +57074,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var d = new Date();
             return monthNames[d.getMonth()] + ' ' + d.getDay() + ', ' + d.getFullYear();
         }
+    },
+    methods: {
+        makePurchase: function makePurchase() {
+            this.$emit('purchased');
+            this.isConfirmPurchase = true;
+        }
     }
 });
 
@@ -57076,121 +57094,160 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-4" }, [
-        _c("div", { staticClass: "cash-input-group" }, [
-          _c("label", { attrs: { for: "paid-amount" } }, [
-            _vm._v("Total Bil (with vat)")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "cash-input",
-            attrs: {
-              type: "number",
-              id: "paid-amount",
-              placeholder: "Total Bil (with vat)",
-              disabled: ""
-            },
-            domProps: { value: _vm.vatWithTotalBill }
-          })
-        ]),
+        !_vm.isConfirmPurchase
+          ? _c("div", [
+              _c("div", { staticClass: "cash-input-group" }, [
+                _c("label", { attrs: { for: "paid-amount" } }, [
+                  _vm._v("Total Bil (with vat)")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "cash-input",
+                  attrs: {
+                    type: "number",
+                    id: "paid-amount",
+                    placeholder: "Total Bil (with vat)",
+                    disabled: ""
+                  },
+                  domProps: { value: _vm.vatWithTotalBill }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "cash-input-group" }, [
+                _c("label", { attrs: { for: "paid-amount" } }, [
+                  _vm._v("Paid Amount")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.paidAmount,
+                      expression: "paidAmount"
+                    }
+                  ],
+                  staticClass: "cash-input",
+                  attrs: {
+                    type: "number",
+                    id: "paid-amount",
+                    placeholder: "Paid Amount"
+                  },
+                  domProps: { value: _vm.paidAmount },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.paidAmount = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "cash-input-group" }, [
+                _c("label", { attrs: { for: "paid-amount" } }, [
+                  _vm._v("Return Amount")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "cash-input",
+                  attrs: {
+                    type: "number",
+                    id: "paid-amount",
+                    placeholder: "Return Amount",
+                    disabled: ""
+                  },
+                  domProps: { value: Math.round(_vm.returnAmount, 2) }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "cash-input-group" }, [
+                _vm.paidAmount >= _vm.vatWithTotalBill
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary btn-sm",
+                        on: { click: _vm.makePurchase }
+                      },
+                      [_vm._v("Confirm Purchase")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger btn-sm",
+                    on: {
+                      click: function($event) {
+                        _vm.$emit("cancelOrder")
+                      }
+                    }
+                  },
+                  [_vm._v("Cancel")]
+                )
+              ])
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c("div", { staticClass: "cash-input-group" }, [
-          _c("label", { attrs: { for: "paid-amount" } }, [
-            _vm._v("Paid Amount")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.paidAmount,
-                expression: "paidAmount"
-              }
-            ],
-            staticClass: "cash-input",
-            attrs: {
-              type: "number",
-              id: "paid-amount",
-              placeholder: "Paid Amount"
-            },
-            domProps: { value: _vm.paidAmount },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.paidAmount = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "cash-input-group" }, [
-          _c("label", { attrs: { for: "paid-amount" } }, [
-            _vm._v("Return Amount")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "cash-input",
-            attrs: {
-              type: "number",
-              id: "paid-amount",
-              placeholder: "Return Amount",
-              disabled: ""
-            },
-            domProps: { value: Math.round(_vm.returnAmount, 2) }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "cash-input-group" }, [
-          _c("button", { staticClass: "btn btn-primary btn-sm" }, [
-            _vm._v("Confirm Purchase")
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-danger btn-sm",
-              on: {
-                click: function($event) {
-                  _vm.$emit("cancelOrder")
-                }
-              }
-            },
-            [_vm._v("Cancel")]
-          )
-        ])
+        _vm.isConfirmPurchase
+          ? _c("div", [
+              _c("div", { staticClass: "purchase-confirm" }, [
+                _c("h2", [_vm._v("Purchase confirmed")]),
+                _vm._v(" "),
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-warning",
+                    on: {
+                      click: function($event) {
+                        _vm.$emit("cancelOrder")
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-angle-left" }),
+                    _vm._v(" Back")
+                  ]
+                )
+              ])
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-8" }, [
         _c("div", { attrs: { id: "page-wrap" } }, [
           _c("div", { attrs: { id: "header" } }, [_vm._v("INVOICE")]),
           _vm._v(" "),
-          _vm._m(0),
+          _vm._m(1),
           _vm._v(" "),
           _c("div", { staticClass: "invoice-provider-details" }, [
             _c("div", { attrs: { id: "identity" } }, [
-              _c("div", { attrs: { id: "address" } }, [
-                _c("b", [_vm._v(_vm._s(_vm.customer.name))]),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(
-                  " " +
-                    _vm._s(_vm.customer.address) +
-                    "\n                            "
-                ),
-                _c("br"),
-                _vm._v(
-                  " Phone: " +
-                    _vm._s(_vm.customer.number) +
-                    "\n                        "
-                )
-              ])
+              _vm.customer
+                ? _c("div", { attrs: { id: "address" } }, [
+                    _c("b", [_vm._v(_vm._s(_vm.customer.name))]),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(
+                      " " +
+                        _vm._s(_vm.customer.address) +
+                        "\n                            "
+                    ),
+                    _c("br"),
+                    _vm._v(
+                      " Phone: " +
+                        _vm._s(_vm.customer.number) +
+                        "\n                        "
+                    )
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("div", { attrs: { id: "customer" } }, [
               _c("table", { attrs: { id: "meta" } }, [
-                _vm._m(1),
+                _vm._m(2),
                 _vm._v(" "),
                 _c("tr", [
                   _c("td", { staticClass: "meta-head" }, [_vm._v("Date")]),
@@ -57209,7 +57266,7 @@ var render = function() {
             "table",
             { staticClass: "invoice-details", attrs: { id: "items" } },
             [
-              _vm._m(2),
+              _vm._m(3),
               _vm._v(" "),
               _vm._l(_vm.bags, function(prodict) {
                 return _c("tr", { staticClass: "item-row" }, [
@@ -57310,15 +57367,26 @@ var render = function() {
               ])
             ],
             2
-          ),
-          _vm._v(" "),
-          _vm._m(3)
+          )
         ])
       ])
     ])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        attrs: { onclick: "printJS('page-wrap', 'html')" }
+      },
+      [_c("i", { staticClass: "fa fa-print" }), _vm._v(" Print")]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -57347,21 +57415,6 @@ var staticRenderFns = [
       _c("th", [_vm._v("Quantity")]),
       _vm._v(" "),
       _c("th", [_vm._v("Price")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "terms" } }, [
-      _c("h5", [_vm._v("Terms")]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v("Dokan is a shop management system. Developed by "),
-        _c("a", { attrs: { href: "http:www.electronthemes.xyz" } }, [
-          _vm._v("Electron Themes")
-        ])
-      ])
     ])
   }
 ]

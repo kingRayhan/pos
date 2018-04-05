@@ -1,6 +1,6 @@
 <template>
     <div id="root">
-        <div class="row" v-if="!confirmPurchase">
+        <div class="row" v-if="!doneShopping">
         <!--<div class="row" v-if="false">-->
             <div class="col-md-3">
                 <products :categorySelected="selected_category_id" @productSelected="pushProductByProductListClick"/>
@@ -26,7 +26,7 @@
 
                     <div class="mt-3 mb-3">
                         <h5 class="text-uppercase pull-left pr-2">Shopping card</h5>
-                        <button v-if="bagsUpdated.length" @click="confirmPurchases" class="pull-left btn btn-primary btn-sm">ConfirmPurchase</button>
+                        <button v-if="bagsUpdated.length" @click="doneShopping = true" class="pull-left btn btn-primary btn-sm text-uppercase">Done</button>
                     </div>
 
                     <barcode @fetchedProduct="pushProductByBarcode" />
@@ -34,9 +34,8 @@
                 </div>
             </div>
         </div>
-        <div v-if="confirmPurchase">
-        <!--<div v-if="true">-->
-            <invoice :bags="bagsUpdated" :customer="selected_customer" @cancelOrder=" confirmPurchase = false "/>
+        <div v-if="doneShopping">
+                <invoice :bags="bagsUpdated" :customer="selected_customer" @purchased="confirmPurchases" @cancelOrder="doneShopping=false"/>
         </div>
     </div><!--#root-->
 </template>
@@ -70,7 +69,9 @@
 
 
                 confirmPurchase: false,
-                errorHappened: false
+                doneShopping: false,
+                errorHappened: false,
+
             }
         },
         methods: {
