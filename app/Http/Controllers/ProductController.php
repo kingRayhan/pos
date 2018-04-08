@@ -71,7 +71,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit' , compact('product'));
+        $product_cats = ProductCategory::all();
+        $cat_id = $product->product_category_id;
+        return view('products.edit' , compact('product' , 'product_cats' , 'cat_id'));
     }
 
     /**
@@ -89,6 +91,7 @@ class ProductController extends Controller
                 'buy_price' => $request->buy_price,
                 'sell_price' => $request->sell_price,
                 'stock' => $request->stock,
+                'product_category_id' => $request->product_category_id == 'null' ? NULL : $request->product_category_id
             ]);
             return redirect()->route('products.index');
     }

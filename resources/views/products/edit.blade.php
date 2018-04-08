@@ -52,6 +52,16 @@
                         placeholder="Stock Limit" 
                         value="{{ $product->stock }}">
                     </div>
+                    <!-- @inputfield product_category_id  -->
+                     <div class="form-group">
+                         <label for="product_category_id">Select Category</label>
+                         <select name="product_category_id" id="product_category_id" class="form-control select2">
+                             <option value="null">No category</option>
+                             @foreach($product_cats as $product_cat)
+                                 <option value="{{ $product_cat->id }}" @if($product_cat->id === $cat_id) selected @endif>{{ $product_cat->name }}</option>
+                             @endforeach
+                         </select>
+                    </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
